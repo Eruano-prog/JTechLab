@@ -3,12 +3,17 @@ package Accounts;
 import Transaction.OperationResult;
 
 public class AccountDebet implements IAccount {
+    private Integer host;
     private Double balance = 0.0;
     private Double currentPercentage;
     private Double accumulatedBalance = 0.0;
+    private Integer id;
 
-    public AccountDebet(double percentage) {
+    public AccountDebet(double percentage, int host, int id) {
+
         currentPercentage = percentage;
+        this.host = host;
+        this.id = id;
     }
 
     @Override
@@ -17,7 +22,12 @@ public class AccountDebet implements IAccount {
     }
 
     @Override
-    public OperationResult withdrawMoney(int value) {
+    public void setAccountBalance(Double amount) {
+        balance = amount;
+    }
+
+    @Override
+    public OperationResult withdrawMoney(Double value) {
         if (balance - value < 0) {
             return OperationResult.NotEnoughMoney;
         }
@@ -34,12 +44,13 @@ public class AccountDebet implements IAccount {
 
     @Override
     public void countPercentage() {
-        accumulatedBalance += (balance * currentPercentage) / 100;
+        accumulatedBalance += (balance * currentPercentage) / 365;
     }
 
     @Override
     public void checkOut() {
         balance += accumulatedBalance;
+        accumulatedBalance = 0.0;
     }
 
     @Override
@@ -47,5 +58,15 @@ public class AccountDebet implements IAccount {
         if (newPercentage < 0) return;
 
         currentPercentage = newPercentage;
+    }
+
+    @Override
+    public Integer getHostID() {
+        return host;
+    }
+
+    @Override
+    public Integer getID() {
+        return id;
     }
 }

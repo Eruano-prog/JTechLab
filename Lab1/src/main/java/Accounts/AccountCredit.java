@@ -7,10 +7,14 @@ public class AccountCredit implements IAccount {
     private Integer limit;
     private Double commission;
     private Double accumulatedBalance = 0.0;
+    private Integer host;
+    private Integer id;
 
-    AccountCredit(int limit, double commission) {
+    AccountCredit(int limit, double commission, int host, int id) {
         this.limit = limit;
         this.commission = commission;
+        this.host = host;
+        this.id = id;
     }
 
     @Override
@@ -19,7 +23,12 @@ public class AccountCredit implements IAccount {
     }
 
     @Override
-    public OperationResult withdrawMoney(int value) {
+    public void setAccountBalance(Double amount) {
+        balance = amount;
+    }
+
+    @Override
+    public OperationResult withdrawMoney(Double value) {
         if (balance - value < limit) {
             return OperationResult.NotEnoughMoney;
         }
@@ -35,16 +44,29 @@ public class AccountCredit implements IAccount {
     }
 
     @Override
-    public void countPercentage() {}
+    public void countPercentage() {
+        accumulatedBalance += commission;
+    }
 
     @Override
     public void checkOut() {
-        balance += accumulatedBalance;
+        balance -= accumulatedBalance;
+        accumulatedBalance = 0.0;
     }
 
     @Override
     public void changeConditions(double newPercentage) {
         if (newPercentage < 0) return;
-        currentPercentage = newPercentage;
+        commission = newPercentage;
+    }
+
+    @Override
+    public Integer getHostID() {
+        return host;
+    }
+
+    @Override
+    public Integer getID() {
+        return id;
     }
 }
