@@ -15,6 +15,8 @@ public class CommonBank implements ICommonBank{
 
     public CommonBank(String name){
         this.name = name;
+        accounts = new ArrayList<>();
+        users = new ArrayList<>();
     }
 
     @Override

@@ -27,7 +27,8 @@ public class AppTest {
     }
 
     @Test
-    void testBuilderAccount(){
+    void testRegisteringUser(){
+        var bank = new CommonBank("Sber");
         var user = User.builder()
                 .Id(0)
                 .name("fedor")
@@ -36,7 +37,8 @@ public class AppTest {
                 .passportNumber("123")
                 .build();
 
-        Assertions.assertEquals(user.isVerified(), true);
+        bank.registerUser(user);
 
+        Assertions.assertEquals(bank.getUserByName("fedor"), user);
     }
 }
