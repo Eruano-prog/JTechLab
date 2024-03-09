@@ -1,7 +1,8 @@
 package Transaction;
 
 public enum OperationResult {
-    Success,
-    NotEnoughMoney,
-    InvalidOperation,
+    SUCCESS,
+     //todo: to uppercase
+    NOT_ENOUGH_MONEY,
+    INVALID_OPERATION,
 }

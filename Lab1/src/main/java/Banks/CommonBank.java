@@ -52,7 +52,7 @@ public class CommonBank implements ICommonBank{
     @Override
     public void countPercentages() {
         var stream = accounts.stream();
-        stream.forEach(x -> x.countPercentage());
+        stream.forEach(IAccount::countPercentage);
     }
     @Override
     public String getName() {

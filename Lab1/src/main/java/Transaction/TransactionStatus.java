@@ -1,7 +1,7 @@
 package Transaction;
 
 public enum TransactionStatus {
-    Finished,
-    Processing,
-    Canceled
+    FINISHED,
+    PROCESSING,
+    CANCELED
 }

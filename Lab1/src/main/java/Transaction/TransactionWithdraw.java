@@ -20,22 +20,22 @@ public class TransactionWithdraw implements ITransaction {
     public void act() {
         var result = account.withdrawMoney(amount);
 
-        if (result == OperationResult.Success){
-            status = TransactionStatus.Finished;
+        if (result == OperationResult.SUCCESS){
+            status = TransactionStatus.FINISHED;
             return;
         }
 
-        status = TransactionStatus.Canceled;
+        status = TransactionStatus.CANCELED;
     }
 
     @Override
     public void cancel() {
-        if (status != TransactionStatus.Finished){
+        if (status != TransactionStatus.FINISHED){
             return;
         }
 
         account.setAccountBalance(account.getAccountBalance() + amount);
-        status = TransactionStatus.Canceled;
+        status = TransactionStatus.CANCELED;
     }
 
     @Override

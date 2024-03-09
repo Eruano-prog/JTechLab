@@ -29,17 +29,17 @@ public class AccountDebet implements IAccount {
     @Override
     public OperationResult withdrawMoney(Double value) {
         if (balance - value < 0) {
-            return OperationResult.NotEnoughMoney;
+            return OperationResult.NOT_ENOUGH_MONEY;
         }
 
         balance -= value;
-        return OperationResult.Success;
+        return OperationResult.SUCCESS;
     }
 
     @Override
     public OperationResult depositMoney(Double value) {
         balance += value;
-        return OperationResult.Success;
+        return OperationResult.SUCCESS;
     }
 
     @Override

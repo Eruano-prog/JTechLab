@@ -28,8 +28,8 @@ public class RegisterNode extends ChainNode{
         System.out.println("Enter tour passport number");
         String passport = in.nextLine();
 
-        address = address.length() == 0 ? null : address;
-        passport = passport.length() == 0 ? null : passport;
+        address = address.isEmpty() ? null : address;
+        passport = passport.isEmpty() ? null : passport;
 
         User user = User.builder()
                 .name(name)

@@ -15,37 +15,37 @@ public class TransactionTransfer implements ITransaction {
         this.accountFrom = accountFrom;
         this.accountTo = accountTo;
         this.amount = amount;
-        this.status = TransactionStatus.Processing;
+        this.status = TransactionStatus.PROCESSING;
     }
 
     @Override
     public void act() {
         OperationResult resultFrom = accountFrom.withdrawMoney(amount);
-        if (resultFrom != OperationResult.Success){
-            status = TransactionStatus.Canceled;
+        if (resultFrom != OperationResult.SUCCESS){
+            status = TransactionStatus.CANCELED;
             return;
         }
 
         OperationResult resultTo = accountTo.depositMoney(amount);
-        if (resultTo != OperationResult.Success){
+        if (resultTo != OperationResult.SUCCESS){
             accountFrom.setAccountBalance(accountFrom.getAccountBalance() + amount);
-            status = TransactionStatus.Canceled;
+            status = TransactionStatus.CANCELED;
             return;
         }
 
-        status = TransactionStatus.Finished;
+        status = TransactionStatus.FINISHED;
     }
 
     @Override
     public void cancel() {
-        if (status != TransactionStatus.Finished){
+        if (status != TransactionStatus.FINISHED){
             return;
         }
 
         accountFrom.setAccountBalance(accountFrom.getAccountBalance() + amount);
         accountTo.setAccountBalance(accountTo.getAccountBalance() - amount);
 
-        status = TransactionStatus.Canceled;
+        status = TransactionStatus.CANCELED;
     }
 
     @Override

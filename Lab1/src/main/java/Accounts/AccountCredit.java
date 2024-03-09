@@ -30,17 +30,17 @@ public class AccountCredit implements IAccount {
     @Override
     public OperationResult withdrawMoney(Double value) {
         if (balance - value < limit) {
-            return OperationResult.NotEnoughMoney;
+            return OperationResult.NOT_ENOUGH_MONEY;
         }
 
         balance = balance - value;
-        return OperationResult.Success;
+        return OperationResult.SUCCESS;
     }
 
     @Override
     public OperationResult depositMoney(Double value) {
         balance += value;
-        return OperationResult.Success;
+        return OperationResult.SUCCESS;
     }
 
     @Override

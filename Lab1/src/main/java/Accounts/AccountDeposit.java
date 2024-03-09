@@ -30,14 +30,14 @@ public class AccountDeposit implements IAccount{
     @Override
     public OperationResult withdrawMoney(Double value) {
         if (balance - value < 0) {
-            return OperationResult.NotEnoughMoney;
+            return OperationResult.NOT_ENOUGH_MONEY;
         }
         if (periodsLeft > 0){
-            return OperationResult.InvalidOperation;
+            return OperationResult.INVALID_OPERATION;
         }
 
         balance -= value;
-        return OperationResult.Success;
+        return OperationResult.SUCCESS;
     }
 
     @Override

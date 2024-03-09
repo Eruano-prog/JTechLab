@@ -1,7 +1,6 @@
 package Transaction;
 
 import Accounts.IAccount;
-import com.sun.net.httpserver.Authenticator;
 
 /**
  * Transaction that allows to deposit to some account.
@@ -16,29 +15,29 @@ public class TransactionDeposit implements ITransaction {
     public TransactionDeposit(IAccount account, Double amount) {
         this.account = account;
         this.amount = amount;
-        status = TransactionStatus.Processing;
+        status = TransactionStatus.PROCESSING;
     }
 
     @Override
     public void act() {
         OperationResult result = account.depositMoney(amount);
 
-        if (result == OperationResult.Success){
-            status = TransactionStatus.Finished;
+        if (result == OperationResult.SUCCESS){
+            status = TransactionStatus.FINISHED;
             return;
         }
 
-        status = TransactionStatus.Canceled;
+        status = TransactionStatus.CANCELED;
     }
 
     @Override
     public void cancel() {
-        if (status != TransactionStatus.Finished){
+        if (status != TransactionStatus.FINISHED){
             return;
         }
 
         account.setAccountBalance(account.getAccountBalance() - amount);
-        status = TransactionStatus.Canceled;
+        status = TransactionStatus.CANCELED;
     }
 
     @Override
