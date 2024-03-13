@@ -1,2 +1,6 @@
 rootProject.name = 'Lab2'
+include 'BLL'
+include 'DLL'
+include 'Controller'
+include 'Models'
 
