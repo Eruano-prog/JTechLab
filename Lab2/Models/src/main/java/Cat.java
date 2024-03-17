@@ -17,7 +17,7 @@ public class Cat {
     String type;
     catColor color;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "name")
+    @JoinColumn(name = "HostName")
     Host host;
     @ManyToMany
     ArrayList<Cat> friends;

@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id("io.freefair.lombok") version "8.6"
 }
 
 group = 'org.example'
@@ -13,7 +14,9 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation 'org.postgresql:postgresql:42.7.2'
-    implementation group: 'org.hibernate.orm', name: 'hibernate-core', version: '6.4.4.Final'
+    implementation 'org.hibernate.orm:hibernate-core:6.4.4.Final'
+    implementation 'jakarta.transaction:jakarta.transaction-api'
+    implementation project(":Models")
 }
 
 test {
