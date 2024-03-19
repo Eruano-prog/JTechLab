@@ -6,29 +6,20 @@ import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = null;
+        Cat cat = new Cat();
 
-        try {
-            transaction = session.beginTransaction();
-
-            // Создание объектов и сохранение их в базе данных
-            Cat cat = new Cat();
-            cat.setName("Masanya");
+        cat.setName("Masanya");
 //            cat.setBirthDate(new Date());
-            cat.setType("Home");
+        cat.setType("Home");
 
-            session.save(cat);
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
+        if (sessionFactory == null) {
+            return;
         }
+
+        sessionFactory.inTransaction(session -> {
+            session.persist(cat);
+        });
     }
 }

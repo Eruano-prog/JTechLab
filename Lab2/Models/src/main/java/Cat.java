@@ -5,7 +5,6 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 @Entity
 @Table(name = "cats")
 @Getter
