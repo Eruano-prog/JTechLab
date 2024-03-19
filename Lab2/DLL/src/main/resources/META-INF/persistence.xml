@@ -1,12 +1,12 @@
-<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+    <persistence xmlns="http://java.sun.com/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0">
 
     <persistence-unit name="org.hibernate.tutorial.jpa">
-        <description>
-            Persistence unit for the Jakarta Persistence tutorial of the Hibernate Getting Started Guide
-        </description>
+
+        <class>Cat</class>
+        <class>Host</class>
 
         <properties>
             <!-- Database connection settings -->
@@ -14,9 +14,10 @@
             <property name="jakarta.persistence.jdbc.user" value="postgres" />
             <property name="jakarta.persistence.jdbc.password" value="qwe123" />
 
-            <!-- Automatically export the schema -->
-            <property name="jakarta.persistence.schema-generation.database.action" value="create" />
+
+            <property name="hibernate.default_schema" value="lab2"/>
             <property name="hibernate.hdm2ddl.auto" value="create"/>
+
 
             <!-- Echo all executed SQL to console -->
             <property name="hibernate.show_sql" value="true" />

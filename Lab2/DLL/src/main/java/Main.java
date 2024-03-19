@@ -1,25 +1,27 @@
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import jakarta.persistence.*;
 import org.hibernate.Transaction;
 
-import java.util.Date;
-
 public class Main {
-    public static void main(String[] args) {
-        Cat cat = new Cat();
+    public static void main(String[] args) throws Exception{
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("org.hibernate.tutorial.jpa");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
 
+        Cat cat = new Cat();
         cat.setName("Masanya");
-//            cat.setBirthDate(new Date());
         cat.setType("Home");
 
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        try{
 
-        if (sessionFactory == null) {
-            return;
+            transaction.begin();
+            entityManager.persist(cat);
+            transaction.commit();
         }
-
-        sessionFactory.inTransaction(session -> {
-            session.persist(cat);
-        });
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            entityManager.close();
+        }
     }
 }
