@@ -4,8 +4,13 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 public class CatRepository {
+    final private EntityManagerFactory entityManagerFactory;
+
+    public CatRepository(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+    }
+
     void insert(Cat cat) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Lab2");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
@@ -24,7 +29,6 @@ public class CatRepository {
         }
     }
     public Cat getCatByName(String name) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Lab2");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
@@ -46,13 +50,12 @@ public class CatRepository {
     }
 
     public void update(Cat cat){
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Lab2");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
         try{
             transaction.begin();
-            cat = entityManager.merge(cat);
+            entityManager.merge(cat);
             transaction.commit();
         }
         catch (Exception e) {
@@ -66,8 +69,6 @@ public class CatRepository {
     }
 
     public void delete(Cat cat){
-
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Lab2");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 

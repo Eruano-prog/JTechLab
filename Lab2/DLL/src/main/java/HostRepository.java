@@ -52,7 +52,7 @@ public class HostRepository {
 
         try{
             transaction.begin();
-            host = entityManager.merge(host);
+            entityManager.merge(host);
             transaction.commit();
         }
         catch (Exception e) {
