@@ -3,15 +3,15 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-public class CatRepository {
-    void insert(Cat cat) {
+public class HostRepository {
+    void insert(Host host) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Lab2");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
         try{
             transaction.begin();
-            entityManager.persist(cat);
+            entityManager.persist(host);
             transaction.commit();
         }
         catch (Exception e) {
@@ -23,15 +23,15 @@ public class CatRepository {
             entityManagerFactory.close();
         }
     }
-    public Cat getCatByName(String name) {
+    public Host getHostByName(String name) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Lab2");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
-        Cat cat = null;
+        Host host = null;
         try{
             transaction.begin();
-            cat = entityManager.find(Cat.class, name);
+            host = entityManager.find(Host.class, name);
             transaction.commit();
         }
         catch (Exception e) {
@@ -42,17 +42,17 @@ public class CatRepository {
             entityManager.close();
             entityManagerFactory.close();
         }
-        return cat;
+        return host;
     }
 
-    public void update(Cat cat){
+    public void update(Host host){
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Lab2");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
         try{
             transaction.begin();
-            cat = entityManager.merge(cat);
+            host = entityManager.merge(host);
             transaction.commit();
         }
         catch (Exception e) {
@@ -65,7 +65,7 @@ public class CatRepository {
         }
     }
 
-    public void delete(Cat cat){
+    public void delete(Host host){
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Lab2");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -73,7 +73,7 @@ public class CatRepository {
 
         try{
             transaction.begin();
-            entityManager.detach(cat);
+            entityManager.detach(host);
             transaction.commit();
         }
         catch (Exception e) {

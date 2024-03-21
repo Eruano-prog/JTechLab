@@ -7,11 +7,9 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.30/f195ee86e6c896ea47a1d39defbe20eb59cd149d/lombok-1.18.30.jar" />
         </processorPath>
-        <module name="org.example.Lab2.test" />
         <module name="Lab2.DLL.test" />
         <module name="Lab2.Models.main" />
         <module name="Lab2.Models.test" />
-        <module name="org.example.Lab2.main" />
         <module name="Lab2.DLL.main" />
       </profile>
     </annotationProcessing>
