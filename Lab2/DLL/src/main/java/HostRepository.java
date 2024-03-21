@@ -4,8 +4,13 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 public class HostRepository {
+    final private EntityManagerFactory entityManagerFactory;
+
+    public HostRepository(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+    }
+
     void insert(Host host) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Lab2");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
@@ -24,7 +29,6 @@ public class HostRepository {
         }
     }
     public Host getHostByName(String name) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Lab2");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
@@ -46,7 +50,6 @@ public class HostRepository {
     }
 
     public void update(Host host){
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Lab2");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
@@ -66,8 +69,6 @@ public class HostRepository {
     }
 
     public void delete(Host host){
-
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Lab2");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
