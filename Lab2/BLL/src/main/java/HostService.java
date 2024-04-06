@@ -5,19 +5,25 @@ public class HostService {
         this.hostRepository = hostRepository;
     }
 
-    public void addHost(Host host){
-        hostRepository.insert(host);
+    public void addHost(HostDTO host){
+        Host convertedHost = new Host(host.name, host.birthDate, host.cats);
+        hostRepository.insert(convertedHost);
     }
 
-    public void deleteHost(Host host){
-        hostRepository.delete(host);
+    public void deleteHost(HostDTO host){
+        Host convertedHost = new Host(host.name, host.birthDate, host.cats);
+        hostRepository.delete(convertedHost);
     }
 
-    public Host getHost(String name){
-        return hostRepository.getHostByName(name);
+    public HostDTO getHost(String name){
+        Host host = hostRepository.getHostByName(name);
+        HostDTO convertedHost = new HostDTO(host.name, host.birthDate, host.cats);
+
+        return convertedHost;
     }
 
-    public void modifyCat(Host host){
-        hostRepository.update(host);
+    public void modifyHost(HostDTO host){
+        Host convertedHost = new Host(host.name, host.birthDate, host.cats);
+        hostRepository.update(convertedHost);
     }
 }

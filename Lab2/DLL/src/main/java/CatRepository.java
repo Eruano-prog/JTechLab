@@ -10,7 +10,7 @@ public class CatRepository {
         this.entityManagerFactory = entityManagerFactory;
     }
 
-    void insert(Cat cat) {
+    public void insert(Cat cat) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 

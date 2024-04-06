@@ -10,7 +10,7 @@ public class HostRepository {
         this.entityManagerFactory = entityManagerFactory;
     }
 
-    void insert(Host host) {
+    public void insert(Host host) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 

@@ -1,5 +1,7 @@
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -9,15 +11,17 @@ import java.util.Date;
 @Table(name = "cats")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cat {
     @Id
-    String name;
-    Date birthDate;
-    String type;
-    catColor color;
+    public String name;
+    public Date birthDate;
+    public String type;
+    public catColor color;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HostName")
-    Host host;
+    public Host host;
     @ManyToMany
-    ArrayList<Cat> friends;
+    public ArrayList<Cat> friends;
 }
