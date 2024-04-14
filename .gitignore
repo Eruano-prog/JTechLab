@@ -12,7 +12,7 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
-/Lab2/Models/build/
-/Lab2/DLL/build/
+/Lab3/Models/build/
+/Lab3/DLL/build/
 .idea/*
 .idea/

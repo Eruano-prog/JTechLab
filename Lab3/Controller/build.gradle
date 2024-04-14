@@ -15,6 +15,10 @@ dependencies {
 
     implementation project(":BLL")
     implementation project(":Models")
+
+    implementation 'org.springframework:spring-core:6.1.5'
+    implementation 'org.springframework:spring-context:6.1.5'
+    implementation 'org.springframework:spring-web:6.1.5'
 }
 
 test {

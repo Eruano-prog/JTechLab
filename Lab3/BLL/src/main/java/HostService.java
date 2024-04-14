@@ -1,13 +1,20 @@
-public class HostService {
-    private final HostRepository hostRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-    public HostService(HostRepository hostRepository) {
+import java.util.Optional;
+
+@Service
+public class HostService {
+    private final IHostRepository hostRepository;
+
+    @Autowired
+    public HostService(IHostRepository hostRepository) {
         this.hostRepository = hostRepository;
     }
 
     public void addHost(HostDTO host){
         Host convertedHost = new Host(host.name, host.birthDate, host.cats);
-        hostRepository.insert(convertedHost);
+        hostRepository.save(convertedHost);
     }
 
     public void deleteHost(HostDTO host){
@@ -16,7 +23,12 @@ public class HostService {
     }
 
     public HostDTO getHost(String name){
-        Host host = hostRepository.getHostByName(name);
+        Optional<Host> hostOptional = hostRepository.findById(name);
+
+        if (hostOptional.isEmpty()) return null;
+
+        Host host = hostOptional.get();
+
         HostDTO convertedHost = new HostDTO(host.name, host.birthDate, host.cats);
 
         return convertedHost;
@@ -24,6 +36,6 @@ public class HostService {
 
     public void modifyHost(HostDTO host){
         Host convertedHost = new Host(host.name, host.birthDate, host.cats);
-        hostRepository.update(convertedHost);
+        hostRepository.save(convertedHost);
     }
 }
