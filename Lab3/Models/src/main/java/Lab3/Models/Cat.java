@@ -1,8 +1,6 @@
-package Models;
+package Lab3.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,14 +10,20 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "cats")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Host {
+public class Cat {
     @Id
     public String name;
     public Date birthDate;
-    @OneToMany
-    public List<Cat> cats;
+    public String type;
+    public catColor color;
+    @ManyToOne
+    @JoinColumn(name = "HostName")
+    public Host host;
+    @ManyToMany
+    public List<Cat> friends;
 }

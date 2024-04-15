@@ -1,8 +1,8 @@
-package Repositories;
+package Lab3.Repositories;
 
-import Models.Host;
+import Lab3.Models.Cat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IHostRepository extends JpaRepository<Host, String> {}
+public interface ICatRepository extends JpaRepository<Cat, String> {}

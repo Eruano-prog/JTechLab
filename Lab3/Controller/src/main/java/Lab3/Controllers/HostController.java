@@ -1,7 +1,7 @@
-package Controllers;
+package Lab3.Controllers;
 
-import Models.HostDTO;
-import Services.HostService;
+import Lab3.Models.HostDTO;
+import Lab3.Services.HostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;

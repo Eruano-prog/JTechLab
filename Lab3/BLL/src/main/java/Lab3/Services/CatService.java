@@ -1,8 +1,8 @@
-package Services;
+package Lab3.Services;
 
-import Models.Cat;
-import Models.CatDTO;
-import Repositories.ICatRepository;
+import Lab3.Models.Cat;
+import Lab3.Models.CatDTO;
+import Lab3.Repositories.ICatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,12 +33,12 @@ public class CatService {
     }
 
     public CatDTO getCat(String name){
-        Optional<Cat> optionalCatcat = catRepository.findById(name);
+        Optional<Cat> optionalCat = catRepository.findById(name);
 
-        if (optionalCatcat.isEmpty()){
+        if (optionalCat.isEmpty()){
             return null;
         }
-        Cat cat = optionalCatcat.get();
+        Cat cat = optionalCat.get();
         return new CatDTO(cat.name, cat.birthDate, cat.type, cat.color, cat.host, cat.friends);
     }
 

@@ -1,4 +1,4 @@
-package Models;
+package Lab3.Models;
 
 public enum catColor {
     WHITE,

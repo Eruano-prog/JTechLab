@@ -1,10 +1,10 @@
-package Controllers;
+package Lab3.Controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-import Models.CatDTO;
-import Services.CatService;
+import Lab3.Models.CatDTO;
+import Lab3.Services.CatService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +22,8 @@ public class CatController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CatDTO> getCat(@RequestParam String name) {
         CatDTO cat = catService.getCat(name);
+        System.out.println("Нихера");
+        System.out.println("Cat Name: " + name + ", Cat: " + cat);
         return ResponseEntity.ok(cat);
     }
 

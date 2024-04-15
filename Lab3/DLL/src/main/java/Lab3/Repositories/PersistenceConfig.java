@@ -1,4 +1,4 @@
-package Repositories;
+package Lab3.Repositories;
 
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.context.annotation.Bean;
@@ -18,14 +18,14 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "Repositories")
+@EnableJpaRepositories(basePackages = "Lab3.Repositories")
 public class PersistenceConfig { 
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan("Models");
+        em.setPackagesToScan("Lab3/Models");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -48,9 +48,9 @@ public class PersistenceConfig {
         properties.setProperty("jakarta.persistence.schema-generation.database.action", "drop-and-create");
         properties.setProperty("hibernate.default_schema", "lab2");
         properties.setProperty("hibernate.hbm2ddl.auto", "create");
-        properties.setProperty("hibernate.show_sql", "true");
-        properties.setProperty("hibernate.format_sql", "true");
-        properties.setProperty("hibernate.use_sql_comments", "true");
+//        properties.setProperty("hibernate.show_sql", "true");
+//        properties.setProperty("hibernate.format_sql", "true");
+//        properties.setProperty("hibernate.use_sql_comments", "true");
         return properties;
     }
 

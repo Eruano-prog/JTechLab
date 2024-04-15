@@ -1,8 +1,8 @@
-package Services;
+package Lab3.Services;
 
-import Models.Host;
-import Models.HostDTO;
-import Repositories.IHostRepository;
+import Lab3.Models.Host;
+import Lab3.Models.HostDTO;
+import Lab3.Repositories.IHostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
