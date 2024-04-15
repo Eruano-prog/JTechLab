@@ -1,3 +1,8 @@
+package Services;
+
+import Models.Host;
+import Models.HostDTO;
+import Repositories.IHostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

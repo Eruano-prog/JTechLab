@@ -1,11 +1,13 @@
+package Models;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "cats")
@@ -19,9 +21,9 @@ public class Cat {
     public Date birthDate;
     public String type;
     public catColor color;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "HostName")
     public Host host;
     @ManyToMany
-    public ArrayList<Cat> friends;
+    public List<Cat> friends;
 }

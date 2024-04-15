@@ -1,3 +1,8 @@
+package Services;
+
+import Models.Cat;
+import Models.CatDTO;
+import Repositories.ICatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +23,12 @@ public class CatService {
         catRepository.save(catToAdd);
     }
 
-    public void deleteCat(CatDTO cat){
-        Cat catToDelete = new Cat(cat.name, cat.birthDate, cat.type, cat.color, cat.host, cat.friends);
+    public void deleteCat(String name){
+        Optional<Cat> cat = catRepository.findById(name);
 
+        if (cat.isEmpty()) return;
+
+        Cat catToDelete = cat.get();
         catRepository.delete(catToDelete);
     }
 

@@ -1,3 +1,5 @@
+package Models;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -6,8 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,5 +21,5 @@ public class Host {
     public String name;
     public Date birthDate;
     @OneToMany
-    public ArrayList<Cat> cats;
+    public List<Cat> cats;
 }

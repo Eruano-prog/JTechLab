@@ -1,7 +1,9 @@
+package Models;
+
 import lombok.AllArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 public class CatDTO {
@@ -10,5 +12,5 @@ public class CatDTO {
     public String type;
     public catColor color;
     public Host host;
-    public ArrayList<Cat> friends;
+    public List<Cat> friends;
 }

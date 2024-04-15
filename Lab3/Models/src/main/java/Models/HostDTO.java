@@ -1,12 +1,12 @@
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+package Models;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,5 +14,5 @@ import java.util.Date;
 public class HostDTO {
     public String name;
     public Date birthDate;
-    public ArrayList<Cat> cats;
+    public List<Cat> cats;
 }

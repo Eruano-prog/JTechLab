@@ -8,8 +8,8 @@
             Persistence unit for the Jakarta Persistence tutorial of the Hibernate Getting Started Guide
         </description>
 
-        <class>Cat</class>
-        <class>Host</class>
+        <class>Models.Cat</class>
+        <class>Models.Host</class>
 
         <properties>
             <!-- Database connection settings -->

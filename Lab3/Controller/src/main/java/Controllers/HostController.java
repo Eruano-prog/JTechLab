@@ -1,3 +1,8 @@
+package Controllers;
+
+import Models.HostDTO;
+import Services.HostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
@@ -7,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class HostController {
     public HostService hostService;
 
+    @Autowired
     public HostController(HostService hostService) {
         this.hostService = hostService;
     }

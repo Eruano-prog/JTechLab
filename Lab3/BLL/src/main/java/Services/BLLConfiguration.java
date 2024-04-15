@@ -1,7 +1,9 @@
+package Services;
+
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackages = "java")
-public class DLLConfiguration {
+@ComponentScan(basePackages = "Services")
+public class BLLConfiguration {
 }
