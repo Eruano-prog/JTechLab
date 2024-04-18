@@ -1,4 +1,5 @@
 package Lab3.Controllers;
+import Lab3.Models.catColor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,8 @@ import Lab3.Services.CatService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/cat")
@@ -25,6 +28,11 @@ public class CatController {
         System.out.println("Нихера");
         System.out.println("Cat Name: " + name + ", Cat: " + cat);
         return ResponseEntity.ok(cat);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<CatDTO>> getCatsByColor(@RequestParam catColor color) {
+        return ResponseEntity.ok(catService.getCatsByColor(color));
     }
 
     @PostMapping
