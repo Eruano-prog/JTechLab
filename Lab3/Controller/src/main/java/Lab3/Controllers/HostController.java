@@ -1,8 +1,11 @@
 package Lab3.Controllers;
 
+import Lab3.Models.CatDTO;
 import Lab3.Models.HostDTO;
 import Lab3.Services.HostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,26 +20,32 @@ public class HostController {
         this.hostService = hostService;
     }
 
-    @GetMapping("/{name}")
-    public void getHost(@PathVariable String name){
+    @GetMapping(value = "/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HostDTO> getHost(@PathVariable String name){
         HostDTO host = hostService.getHost(name);
 
-        System.out.println("host Name:" + host.name);
+        return ResponseEntity.ok(host);
     }
 
     @PostMapping
-    public void addHost(@RequestBody HostDTO host){
+    public ResponseEntity<String> addHost(@RequestBody HostDTO host){
         hostService.addHost(host);
+
+        return ResponseEntity.ok("Host added");
     }
 
     @PutMapping("/{name}")
-    public void modifyHost(@PathVariable String name, @RequestBody HostDTO host){
-        host.setName(name); // обновляем имя хоста
+    public ResponseEntity<String> modifyHost(@PathVariable String name, @RequestBody HostDTO host){
+        host.setName(name);
         hostService.modifyHost(host);
+
+        return ResponseEntity.ok("Host modified");
     }
 
     @DeleteMapping("/{name}")
-    public void deleteHost(@PathVariable HostDTO host){
-        hostService.deleteHost(host);
+    public ResponseEntity<String> deleteHost(@PathVariable String name){
+        hostService.deleteHost(name);
+
+        return ResponseEntity.ok("Host deleted");
     }
 }

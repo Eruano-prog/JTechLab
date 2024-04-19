@@ -22,9 +22,15 @@ public class HostService {
         hostRepository.save(convertedHost);
     }
 
-    public void deleteHost(HostDTO host){
-        Host convertedHost = new Host(host.name, host.birthDate, host.cats);
-        hostRepository.delete(convertedHost);
+    public void deleteHost(String name){
+        Optional<Host> convertedHost = hostRepository.findById(name);
+
+        if (convertedHost.isEmpty()){
+            return;
+        }
+
+        Host host = convertedHost.get();
+        hostRepository.delete(host);
     }
 
     public HostDTO getHost(String name){

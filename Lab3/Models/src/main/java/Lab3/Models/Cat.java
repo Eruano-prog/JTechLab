@@ -24,6 +24,6 @@ public class Cat {
     @ManyToOne
     @JoinColumn(name = "HostName")
     public Host host;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     public List<Cat> friends;
 }
