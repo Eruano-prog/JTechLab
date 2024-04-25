@@ -1,8 +1,6 @@
 package Lab3.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Host {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer id;
     public String name;
     public Date birthDate;
     @OneToMany

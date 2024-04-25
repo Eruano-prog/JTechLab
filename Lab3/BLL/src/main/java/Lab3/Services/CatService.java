@@ -22,12 +22,12 @@ public class CatService {
     }
 
     public void addCat(CatDTO cat) {
-        Cat catToAdd = new Cat(cat.name, cat.birthDate, cat.type, cat.color, cat.host, cat.friends);
+        Cat catToAdd = new Cat(cat.id, cat.name, cat.birthDate, cat.type, cat.color, cat.host, cat.friends);
         catRepository.save(catToAdd);
     }
 
     public void deleteCat(String name){
-        Optional<Cat> cat = catRepository.findById(name);
+        Optional<Cat> cat = catRepository.findByNameIgnoreCase(name);
 
         if (cat.isEmpty()) return;
 
@@ -36,25 +36,25 @@ public class CatService {
     }
 
     public CatDTO getCat(String name){
-        Optional<Cat> optionalCat = catRepository.findById(name);
+        Optional<Cat> optionalCat = catRepository.findByNameIgnoreCase(name);
 
         if (optionalCat.isEmpty()){
             return null;
         }
         Cat cat = optionalCat.get();
-        return new CatDTO(cat.name, cat.birthDate, cat.type, cat.color, cat.host, cat.friends);
+        return new CatDTO(cat.id, cat.name, cat.birthDate, cat.type, cat.color, cat.host, cat.friends);
     }
 
     public void modifyCat(CatDTO cat){
-        Cat catToModify = new Cat(cat.name, cat.birthDate, cat.type, cat.color, cat.host, cat.friends);
+        Cat catToModify = new Cat(cat.id, cat.name, cat.birthDate, cat.type, cat.color, cat.host, cat.friends);
         catRepository.save(catToModify);
     }
 
-    public void addFriend(String reciever, CatDTO catFriend){
+    public void addFriend(String receiver, CatDTO catFriend){
 
-        Cat catToAdd = new Cat(catFriend.name, catFriend.birthDate, catFriend.type, catFriend.color, catFriend.host, catFriend.friends);
+        Cat catToAdd = new Cat(catFriend.id, catFriend.name, catFriend.birthDate, catFriend.type, catFriend.color, catFriend.host, catFriend.friends);
 
-        Optional<Cat> cat = catRepository.findById(reciever);
+        Optional<Cat> cat = catRepository.findByNameIgnoreCase(receiver);
         if (cat.isEmpty()){
             return;
         }
@@ -65,11 +65,11 @@ public class CatService {
     }
 
     public List<CatDTO> getCatsByColor(catColor color){
-        List<Cat> array = catRepository.findByColor(color);
+        List<Cat> cats = catRepository.findByColor(color);
         List<CatDTO> catDTOList = new ArrayList<>();
 
-        for (Cat cat : array){
-            CatDTO dto = new CatDTO(cat.name, cat.birthDate, cat.type, cat.color, cat.host, cat.friends);
+        for (Cat cat : cats){
+            CatDTO dto = new CatDTO(cat.id, cat.name, cat.birthDate, cat.type, cat.color, cat.host, cat.friends);
             catDTOList.add(dto);
         }
 

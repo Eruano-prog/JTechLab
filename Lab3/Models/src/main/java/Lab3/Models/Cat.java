@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,13 +19,16 @@ import java.util.List;
 @NoArgsConstructor
 public class Cat {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer id;
     public String name;
     public Date birthDate;
     public String type;
     public catColor color;
     @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "HostName")
     public Host host;
     @ManyToMany(fetch = FetchType.LAZY)
-    public List<Cat> friends;
+    public List<Cat> friends = new ArrayList<>();
 }

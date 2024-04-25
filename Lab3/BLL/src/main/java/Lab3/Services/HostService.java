@@ -18,12 +18,12 @@ public class HostService {
     }
 
     public void addHost(HostDTO host){
-        Host convertedHost = new Host(host.name, host.birthDate, host.cats);
+        Host convertedHost = new Host(host.id, host.name, host.birthDate, host.cats);
         hostRepository.save(convertedHost);
     }
 
     public void deleteHost(String name){
-        Optional<Host> convertedHost = hostRepository.findById(name);
+        Optional<Host> convertedHost = hostRepository.findByName(name);
 
         if (convertedHost.isEmpty()){
             return;
@@ -34,19 +34,17 @@ public class HostService {
     }
 
     public HostDTO getHost(String name){
-        Optional<Host> hostOptional = hostRepository.findById(name);
+        Optional<Host> hostOptional = hostRepository.findByName(name);
 
         if (hostOptional.isEmpty()) return null;
 
         Host host = hostOptional.get();
 
-        HostDTO convertedHost = new HostDTO(host.name, host.birthDate, host.cats);
-
-        return convertedHost;
+        return new HostDTO(host.id, host.name, host.birthDate, host.cats);
     }
 
     public void modifyHost(HostDTO host){
-        Host convertedHost = new Host(host.name, host.birthDate, host.cats);
+        Host convertedHost = new Host(host.id, host.name, host.birthDate, host.cats);
         hostRepository.save(convertedHost);
     }
 }
