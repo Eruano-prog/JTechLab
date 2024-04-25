@@ -1,15 +1,12 @@
 package Lab3.Controllers;
 
-import Lab3.Models.CatDTO;
 import Lab3.Models.HostDTO;
 import Lab3.Services.HostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-@Component
 @RestController
 @RequestMapping("/hosts")
 public class HostController {
