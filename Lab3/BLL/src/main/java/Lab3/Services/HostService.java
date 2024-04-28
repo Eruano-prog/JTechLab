@@ -3,6 +3,7 @@ package Lab3.Services;
 import Lab3.Models.Host;
 import Lab3.Models.HostDTO;
 import Lab3.Repositories.IHostRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,33 +19,26 @@ public class HostService {
     }
 
     public void addHost(HostDTO host){
-        Host convertedHost = new Host(host.id, host.name, host.birthDate, host.cats);
+        Host convertedHost = host.toHost();
         hostRepository.save(convertedHost);
     }
 
     public void deleteHost(String name){
-        Optional<Host> convertedHost = hostRepository.findByName(name);
+        Host host = hostRepository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("Host with name " + name + " not found"));
 
-        if (convertedHost.isEmpty()){
-            return;
-        }
-
-        Host host = convertedHost.get();
         hostRepository.delete(host);
     }
 
     public HostDTO getHost(String name){
-        Optional<Host> hostOptional = hostRepository.findByName(name);
+        Host host = hostRepository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("Host with name " + name + " not found"));
 
-        if (hostOptional.isEmpty()) return null;
-
-        Host host = hostOptional.get();
-
-        return new HostDTO(host.id, host.name, host.birthDate, host.cats);
+        return host.toDTO();
     }
 
     public void modifyHost(HostDTO host){
-        Host convertedHost = new Host(host.id, host.name, host.birthDate, host.cats);
+        Host convertedHost = host.toHost();
         hostRepository.save(convertedHost);
     }
 }

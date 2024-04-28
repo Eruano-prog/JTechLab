@@ -4,12 +4,12 @@ import Lab3.Models.Cat;
 import Lab3.Models.CatDTO;
 import Lab3.Models.catColor;
 import Lab3.Repositories.ICatRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -22,56 +22,46 @@ public class CatService {
     }
 
     public void addCat(CatDTO cat) {
-        Cat catToAdd = new Cat(cat.id, cat.name, cat.birthDate, cat.type, cat.color, cat.host, cat.friends);
+        Cat catToAdd = cat.toCat();
         catRepository.save(catToAdd);
     }
 
     public void deleteCat(String name){
-        Optional<Cat> cat = catRepository.findByNameIgnoreCase(name);
+        Cat cat = catRepository.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new EntityNotFoundException("Cat with name " + name + " not found"));
 
-        if (cat.isEmpty()) return;
-
-        Cat catToDelete = cat.get();
-        catRepository.delete(catToDelete);
+        catRepository.delete(cat);
     }
 
     public CatDTO getCat(String name){
-        Optional<Cat> optionalCat = catRepository.findByNameIgnoreCase(name);
-
-        if (optionalCat.isEmpty()){
-            return null;
-        }
-        Cat cat = optionalCat.get();
-        return new CatDTO(cat.id, cat.name, cat.birthDate, cat.type, cat.color, cat.host, cat.friends);
+        Cat cat = catRepository.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new EntityNotFoundException("Cat with name " + name + " not found"));
+        return cat.toDTO();
     }
 
     public void modifyCat(CatDTO cat){
-        Cat catToModify = new Cat(cat.id, cat.name, cat.birthDate, cat.type, cat.color, cat.host, cat.friends);
+        Cat catToModify = cat.toCat();
         catRepository.save(catToModify);
     }
 
     public void addFriend(String receiver, CatDTO catFriend){
 
-        Cat catToAdd = new Cat(catFriend.id, catFriend.name, catFriend.birthDate, catFriend.type, catFriend.color, catFriend.host, catFriend.friends);
+        Cat catToAdd = catFriend.toCat();
 
-        Optional<Cat> cat = catRepository.findByNameIgnoreCase(receiver);
-        if (cat.isEmpty()){
-            return;
-        }
+        Cat cat = catRepository.findByNameIgnoreCase(receiver)
+                .orElseThrow(() -> new EntityNotFoundException("Cat with name " + catToAdd.name + " not found"));
 
-        cat.get().friends.add(catToAdd);
+        cat.friends.add(catToAdd);
 
-        catRepository.save(cat.get());
+        catRepository.save(cat);
     }
 
     public List<CatDTO> getCatsByColor(catColor color){
-        List<Cat> cats = catRepository.findByColor(color);
-        List<CatDTO> catDTOList = new ArrayList<>();
+        List<CatDTO> catDTOList = catRepository.findByColor(color)
+                .stream()
+                .map(Cat::toDTO)
+                .collect(Collectors.toList());
 
-        for (Cat cat : cats){
-            CatDTO dto = new CatDTO(cat.id, cat.name, cat.birthDate, cat.type, cat.color, cat.host, cat.friends);
-            catDTOList.add(dto);
-        }
 
         return catDTOList;
     }

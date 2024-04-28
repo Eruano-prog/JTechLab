@@ -31,4 +31,8 @@ public class Cat {
     public Host host;
     @ManyToMany(fetch = FetchType.LAZY)
     public List<Cat> friends = new ArrayList<>();
+
+    public CatDTO toDTO() {
+        return new CatDTO(this.id, this.name, this.birthDate, this.type, this.color, this.host, this.friends);
+    }
 }

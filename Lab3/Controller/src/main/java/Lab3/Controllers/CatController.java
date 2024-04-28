@@ -1,4 +1,5 @@
     package Lab3.Controllers;
+    import Lab3.Models.Cat;
     import Lab3.Models.catColor;
     import org.springframework.http.HttpStatus;
     import org.springframework.http.MediaType;
@@ -34,20 +35,20 @@
         }
 
         @PostMapping
-        public ResponseEntity<String> addCat(@RequestBody CatDTO cat) {
+        public ResponseEntity<CatDTO> addCat(@RequestBody CatDTO cat) {
             catService.addCat(cat);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Cat added successfully");
+            return ResponseEntity.status(HttpStatus.CREATED).body(cat);
         }
 
         @PutMapping
-        public ResponseEntity<String> modifyCat(@RequestBody CatDTO cat) {
+        public ResponseEntity<CatDTO> modifyCat(@RequestBody CatDTO cat) {
             catService.modifyCat(cat);
-            return ResponseEntity.ok("Cat modified successfully");
+            return ResponseEntity.ok(cat);
         }
 
         @DeleteMapping
         public ResponseEntity<String> deleteCat(@RequestParam String name) {
             catService.deleteCat(name);
-            return ResponseEntity.ok("Cat deleted successfully");
+            return ResponseEntity.ok(name);
         }
     }

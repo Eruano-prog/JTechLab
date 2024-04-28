@@ -17,4 +17,8 @@ public class CatDTO {
     public catColor color;
     public Host host;
     public List<Cat> friends;
+
+    public Cat toCat(){
+        return new Cat(id, name, birthDate, type, color, host, friends);
+    }
 }

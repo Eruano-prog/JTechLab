@@ -25,24 +25,24 @@ public class HostController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addHost(@RequestBody HostDTO host){
+    public ResponseEntity<HostDTO> addHost(@RequestBody HostDTO host){
         hostService.addHost(host);
 
-        return ResponseEntity.ok("Host added");
+        return ResponseEntity.ok(host);
     }
 
     @PutMapping("/{name}")
-    public ResponseEntity<String> modifyHost(@PathVariable String name, @RequestBody HostDTO host){
+    public ResponseEntity<HostDTO> modifyHost(@PathVariable String name, @RequestBody HostDTO host){
         host.setName(name);
         hostService.modifyHost(host);
 
-        return ResponseEntity.ok("Host modified");
+        return ResponseEntity.ok(host);
     }
 
     @DeleteMapping("/{name}")
     public ResponseEntity<String> deleteHost(@PathVariable String name){
         hostService.deleteHost(name);
 
-        return ResponseEntity.ok("Host deleted");
+        return ResponseEntity.ok(name);
     }
 }

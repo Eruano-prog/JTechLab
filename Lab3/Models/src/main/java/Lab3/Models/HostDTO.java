@@ -20,4 +20,8 @@ public class HostDTO {
     public Date birthDate;
     @JsonIgnore
     public List<Cat> cats;
+
+    public Host toHost(){
+        return new Host(id, name, birthDate, cats);
+    }
 }
