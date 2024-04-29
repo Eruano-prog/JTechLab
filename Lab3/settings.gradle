@@ -1,0 +1,6 @@
+rootProject.name = 'Lab3'
+include 'BLL'
+include 'DLL'
+include 'Controller'
+include 'Models'
+
