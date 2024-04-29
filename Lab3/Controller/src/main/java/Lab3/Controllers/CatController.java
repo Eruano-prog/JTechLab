@@ -1,6 +1,7 @@
     package Lab3.Controllers;
     import Lab3.Models.Cat;
     import Lab3.Models.catColor;
+    import jakarta.persistence.EntityNotFoundException;
     import org.springframework.http.HttpStatus;
     import org.springframework.http.MediaType;
     import org.springframework.http.ResponseEntity;
