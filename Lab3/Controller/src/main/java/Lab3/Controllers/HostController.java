@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/hosts")
+@RequestMapping("/host")
 public class HostController {
     public HostService hostService;
 
@@ -31,9 +31,8 @@ public class HostController {
         return ResponseEntity.ok(host);
     }
 
-    @PutMapping("/{name}")
-    public ResponseEntity<HostDTO> modifyHost(@PathVariable String name, @RequestBody HostDTO host){
-        host.setName(name);
+    @PutMapping()
+    public ResponseEntity<HostDTO> modifyHost(@RequestBody HostDTO host){
         hostService.modifyHost(host);
 
         return ResponseEntity.ok(host);

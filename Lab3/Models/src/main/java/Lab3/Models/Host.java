@@ -22,6 +22,7 @@ public class Host {
     public Date birthDate;
     @OneToMany
     public List<Cat> cats;
+    public String roles;
 
     public HostDTO toDTO(){
         return new HostDTO(id, name, birthDate, cats);

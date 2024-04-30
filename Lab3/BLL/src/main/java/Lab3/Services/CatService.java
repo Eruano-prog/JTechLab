@@ -7,14 +7,13 @@ import Lab3.Repositories.ICatRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 @Service
-public class CatService {
+public class CatService{
     private final ICatRepository catRepository;
 
     @Autowired

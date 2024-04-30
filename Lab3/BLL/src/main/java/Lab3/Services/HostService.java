@@ -5,12 +5,15 @@ import Lab3.Models.HostDTO;
 import Lab3.Repositories.IHostRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class HostService {
+public class HostService implements UserDetailsService {
     private final IHostRepository hostRepository;
 
     @Autowired
@@ -40,5 +43,12 @@ public class HostService {
     public void modifyHost(HostDTO host){
         Host convertedHost = host.toHost();
         hostRepository.save(convertedHost);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Host host = hostRepository.findByName(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Host with name " + username + " not found"));
+        return null;
     }
 }
