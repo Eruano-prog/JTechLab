@@ -1,10 +1,12 @@
 package Lab3.Models;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
+import java.util.stream.Collectors;
 
 public class HostDetails implements UserDetails {
 
@@ -16,17 +18,19 @@ public class HostDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return Arrays.stream(host.getRoles().split(", "))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override
     public String getPassword() {
-        return "";
+        return host.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return host.getName();
     }
 
     @Override

@@ -5,10 +5,12 @@ import Lab3.Services.HostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/host")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class HostController {
     public HostService hostService;
 

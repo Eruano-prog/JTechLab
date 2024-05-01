@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import Lab3.Models.CatDTO;
 import Lab3.Models.catColor;
 import Lab3.Services.CatService;
+import org.springframework.security.core.Authentication;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -23,42 +24,49 @@ public class CatControllerTests {
     @Mock
     private CatService catService;
 
+    @Mock
+    private Authentication authentication;
+
     @InjectMocks
     private CatController catController;
 
     @Test
-    public void testGetCat() throws Exception {
+    public void testGetCat() {
         Date specificDate = new Date(2024, Calendar.APRIL, 19);
-
         CatDTO cat = new CatDTO(0, "Fluffy", specificDate, "SomeType", catColor.WHITE, null, null);
-        when(catService.getCat("Fluffy")).thenReturn(cat);
 
-        catController.getCat(cat.name);
+        when(catService.getCat("", "Fluffy")).thenReturn(cat);
+        when(authentication.getName()).thenReturn("");
 
-        verify(catService, times(1)).getCat(cat.name);
+        catController.getCat(authentication, cat.name);
+
+        verify(catService, times(1)).getCat("", cat.name);
     }
 
     @Test
-    public void testGetCatsByColor() throws Exception {
+    public void testGetCatsByColor() {
         Date specificDate = new Date(2024, Calendar.APRIL, 19);
         CatDTO cat1 = new CatDTO(0, "Fluffy", specificDate, "SomeType", catColor.WHITE, null, null);
         CatDTO cat2 = new CatDTO(0, "Snowball", specificDate, "AnotherType", catColor.WHITE, null, null);
         List<CatDTO> cats = Arrays.asList(cat1, cat2);
 
-        when(catService.getCatsByColor(catColor.WHITE)).thenReturn(cats);
+        when(catService.getCatsByColor("", catColor.WHITE)).thenReturn(cats);
+        when(authentication.getName()).thenReturn("");
 
-        catController.getCatsByColor(catColor.WHITE);
-        verify(catService, times(1)).getCatsByColor(catColor.WHITE);
+        catController.getCatsByColor(authentication, catColor.WHITE);
+        verify(catService, times(1)).getCatsByColor("", catColor.WHITE);
     }
 
     @Test
-    public void testAddCat() throws Exception {
+    public void testAddCat() {
         Date specificDate = new Date(2024, Calendar.APRIL, 19);
         CatDTO cat = new CatDTO(0, "Fluffy", specificDate, "SomeType", catColor.WHITE, null, null);
 
-        catController.addCat(cat);
+        when(authentication.getName()).thenReturn("");
 
-        verify(catService, times(1)).addCat(cat);
+        catController.addCat(authentication, cat);
+
+        verify(catService, times(1)).addCat("", cat);
     }
 
     @Test
@@ -66,9 +74,11 @@ public class CatControllerTests {
         Date specificDate = new Date(2024, Calendar.APRIL, 19);
         CatDTO cat = new CatDTO(0, "Fluffy", specificDate, "SomeType", catColor.WHITE, null, null);
 
-        catController.modifyCat(cat);
+        when(authentication.getName()).thenReturn("");
 
-        verify(catService, times(1)).modifyCat(cat);
+        catController.modifyCat(authentication, cat);
+
+        verify(catService, times(1)).modifyCat("", cat);
     }
 
     @Test
@@ -76,8 +86,10 @@ public class CatControllerTests {
         Date specificDate = new Date(2024, Calendar.APRIL, 19);
         CatDTO cat = new CatDTO(0, "Fluffy", specificDate, "SomeType", catColor.WHITE, null, null);
 
-        catController.deleteCat(cat.name);
+        when(authentication.getName()).thenReturn("");
 
-        verify(catService, times(1)).deleteCat(cat.name);
+        catController.deleteCat(authentication, cat.name);
+
+        verify(catService, times(1)).deleteCat("", cat.name);
     }
 }
