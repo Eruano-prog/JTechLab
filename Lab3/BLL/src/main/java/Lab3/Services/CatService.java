@@ -25,12 +25,15 @@ public class CatService{
         this.hostRepository = hostRepository;
     }
 
-    public void addCat(String hostname, CatDTO cat) {
+    public CatDTO addCat(String hostname, CatDTO cat) {
         Host host = hostRepository.findByName(hostname)
                 .orElseThrow(() -> new EntityNotFoundException("Host " + hostname + " does not exist"));
         Cat catToAdd = cat.toCat();
         catToAdd.setHost(host);
-        catRepository.save(catToAdd);
+
+        Cat addedCat = catRepository.save(catToAdd);
+
+        return addedCat.toDTO();
     }
 
     public void deleteCat(String hostname, String name){
@@ -46,14 +49,16 @@ public class CatService{
         return cat.toDTO();
     }
 
-    public void modifyCat(String hostname, CatDTO cat){
+    public CatDTO modifyCat(String hostname, CatDTO cat){
         Host host = hostRepository.findByName(hostname)
                 .orElseThrow(() -> new EntityNotFoundException("Host " + hostname + " does not exist"));
 
         Cat catToModify = cat.toCat();
         catToModify.setHost(host);
 
-        catRepository.save(catToModify);
+        Cat savedCat = catRepository.save(catToModify);
+
+        return savedCat.toDTO();
     }
 
     public void addFriend(String receiver, CatDTO catFriend){

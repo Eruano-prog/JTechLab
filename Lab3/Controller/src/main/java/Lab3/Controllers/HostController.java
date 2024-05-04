@@ -28,16 +28,16 @@ public class HostController {
 
     @PostMapping
     public ResponseEntity<HostDTO> addHost(@RequestBody HostDTO host){
-        hostService.addHost(host);
+        HostDTO savedHost = hostService.addHost(host);
 
-        return ResponseEntity.ok(host);
+        return ResponseEntity.ok(savedHost);
     }
 
     @PutMapping()
     public ResponseEntity<HostDTO> modifyHost(@RequestBody HostDTO host){
-        hostService.modifyHost(host);
+        HostDTO savedHost = hostService.modifyHost(host);
 
-        return ResponseEntity.ok(host);
+        return ResponseEntity.ok(savedHost);
     }
 
     @DeleteMapping("/{name}")

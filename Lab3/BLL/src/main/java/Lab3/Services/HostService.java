@@ -25,10 +25,12 @@ public class HostService implements UserDetailsService {
         this.encoder = encoder;
     }
 
-    public void addHost(HostDTO host){
+    public HostDTO addHost(HostDTO host){
         Host convertedHost = host.toHost();
         convertedHost.setPassword(encoder.encode(convertedHost.getPassword()));
-        hostRepository.save(convertedHost);
+        Host savedHost = hostRepository.save(convertedHost);
+
+        return savedHost.toDTO();
     }
 
     public void deleteHost(String name){
@@ -45,9 +47,12 @@ public class HostService implements UserDetailsService {
         return host.toDTO();
     }
 
-    public void modifyHost(HostDTO host){
+    public HostDTO modifyHost(HostDTO host){
         Host convertedHost = host.toHost();
-        hostRepository.save(convertedHost);
+
+        Host savedHost = hostRepository.save(convertedHost);
+
+        return savedHost.toDTO();
     }
 
     @Override

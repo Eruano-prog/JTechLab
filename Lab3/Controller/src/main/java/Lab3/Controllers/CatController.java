@@ -43,17 +43,17 @@
         public ResponseEntity<CatDTO> addCat(Authentication authentication, @RequestBody CatDTO cat) {
             String username = authentication.getName();
 
-            catService.addCat(username, cat);
+            CatDTO savedCat = catService.addCat(username, cat);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(cat);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedCat);
         }
 
         @PutMapping
         public ResponseEntity<CatDTO> modifyCat(Authentication authentication, @RequestBody CatDTO cat) {
             String username = authentication.getName();
-            catService.modifyCat(username, cat);
 
-            return ResponseEntity.ok(cat);
+            CatDTO savedCat = catService.modifyCat(username, cat);
+            return ResponseEntity.ok(savedCat);
         }
 
         @DeleteMapping
