@@ -3,6 +3,7 @@
     import JTechLabs.Lab5.APIService.BLL.CatService;
     import Lab5.Models.CatDTO;
     import Lab5.Models.catColor;
+    import com.fasterxml.jackson.core.JsonProcessingException;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.HttpStatus;
     import org.springframework.http.MediaType;
@@ -39,7 +40,7 @@
         }
 
         @PostMapping
-        public ResponseEntity<CatDTO> addCat(Authentication authentication, @RequestBody CatDTO cat) {
+        public ResponseEntity<CatDTO> addCat(Authentication authentication, @RequestBody CatDTO cat) throws JsonProcessingException {
             String username = authentication.getName();
 
             catService.addCat(username, cat);
@@ -48,7 +49,7 @@
         }
 
         @PutMapping
-        public ResponseEntity<CatDTO> modifyCat(Authentication authentication, @RequestBody CatDTO cat) {
+        public ResponseEntity<CatDTO> modifyCat(Authentication authentication, @RequestBody CatDTO cat) throws JsonProcessingException {
             String username = authentication.getName();
             catService.modifyCat(username, cat);
 
@@ -56,7 +57,7 @@
         }
 
         @DeleteMapping
-        public ResponseEntity<String> deleteCat(Authentication authentication, @RequestParam String name) {
+        public ResponseEntity<String> deleteCat(Authentication authentication, @RequestParam String name) throws JsonProcessingException {
             String username = authentication.getName();
             catService.deleteCat(username, name);
 

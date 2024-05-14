@@ -1,8 +1,10 @@
 package JTechLabs.Lab5.APIService.DLL;
 
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ser.std.StringSerializer;
 import org.apache.kafka.clients.admin.NewTopic;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
@@ -10,23 +12,27 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
 public class KafkaConfig {
-
-    private final KafkaProperties kafkaProperties;
-
-    @Autowired
-    public KafkaConfig(KafkaProperties kafkaProperties) {
-        this.kafkaProperties = kafkaProperties;
-    }
+    @Value(("${spring.kafka.bootstrap-servers}"))
+    private String bootstrapServers;
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
-        // get configs on application.properties/yml
-        Map<String, Object> properties = kafkaProperties.buildProducerProperties();
-        return new DefaultKafkaProducerFactory<>(properties);
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(
+                ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
+                bootstrapServers);
+        configProps.put(
+                ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
+                StringSerializer.class);
+        configProps.put(
+                ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
+                JsonSerializer.class);
+        return new DefaultKafkaProducerFactory<>(configProps);
     }
 
     @Bean
@@ -35,12 +41,56 @@ public class KafkaConfig {
     }
 
     @Bean
-    public NewTopic topic() {
+    public NewTopic CatPutTopic() {
         return TopicBuilder
-                .name("t.food.order")
+                .name("cat.put")
                 .partitions(1)
                 .replicas(1)
                 .build();
     }
 
+    @Bean
+    public NewTopic CatSaveTopic() {
+        return TopicBuilder
+                .name("cat.save")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic CatDeleteTopic() {
+        return TopicBuilder
+                .name("cat.delete")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic HostPutTopic() {
+        return TopicBuilder
+                .name("host.put")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic HostSaveTopic() {
+        return TopicBuilder
+                .name("host.save")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic HostDeleteTopic() {
+        return TopicBuilder
+                .name("host.delete")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 }

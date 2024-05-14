@@ -11,9 +11,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class CatProducer {
 
-    @Value("${topic.name}")
-    private String orderTopic;
-
     private final ObjectMapper objectMapper;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
@@ -23,10 +20,18 @@ public class CatProducer {
         this.objectMapper = objectMapper;
     }
 
-    public String sendMessage(Cat cat) throws JsonProcessingException {
+    public void putCat(Cat cat) throws JsonProcessingException {
         String catAsMessage = objectMapper.writeValueAsString(cat);
-        kafkaTemplate.send(orderTopic, catAsMessage);
+        kafkaTemplate.send("cat.put", catAsMessage);
+    }
 
-        return "message sent";
+    public void saveCat(Cat cat) throws JsonProcessingException {
+        String catAsMessage = objectMapper.writeValueAsString(cat);
+        kafkaTemplate.send("cat.save", catAsMessage);
+    }
+
+    public void deleteCat(Cat cat) throws JsonProcessingException {
+        String catAsMessage = objectMapper.writeValueAsString(cat);
+        kafkaTemplate.send("cat.delete", catAsMessage);
     }
 }
