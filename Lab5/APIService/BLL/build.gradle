@@ -22,7 +22,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
     implementation project(":Models")
-    implementation project(":APIService:DLL")
+    implementation project(":DLL")
 }
 
 test {
