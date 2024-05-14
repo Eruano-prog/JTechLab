@@ -2,10 +2,9 @@ package Lab3.Models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -13,6 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class HostDTO {
     public Integer id;
@@ -21,7 +22,10 @@ public class HostDTO {
     @JsonIgnore
     public List<Cat> cats;
 
+    public String password;
+    public String roles;
+
     public Host toHost(){
-        return new Host(id, name, birthDate, cats);
+        return new Host(id, name, birthDate, cats, password, roles);
     }
 }

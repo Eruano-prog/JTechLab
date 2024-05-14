@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,20 +22,25 @@ public class HostServiceTest {
     @Mock
     private IHostRepository hostRepository;
 
+    @Mock
+    private PasswordEncoder encoder;
+
     @InjectMocks
     private HostService hostService;
 
     @Test
     public void testAddHost() {
-        HostDTO hostDTO = new HostDTO(0,"John", new Date(1990, 5, 10), new ArrayList<>());
+        HostDTO hostDTO = new HostDTO(0,"John", new Date(1990, 5, 10), new ArrayList<>(), "qwe123", "USER");
+
         hostService.addHost(hostDTO);
+
         verify(hostRepository, times(1)).save(any(Host.class));
     }
 
     @Test
     public void testDeleteHost() {
         String hostName = "John";
-        when(hostRepository.findById(hostName)).thenReturn(Optional.of(new Host(0,hostName, new Date(1990, 5, 10), new ArrayList<>())));
+        when(hostRepository.findByName(hostName)).thenReturn(Optional.of(new Host(0,hostName, new Date(1990, 5, 10), new ArrayList<>(), "qwe123", "USER")));
         hostService.deleteHost(hostName);
         verify(hostRepository, times(1)).delete(any(Host.class));
     }
@@ -42,14 +48,14 @@ public class HostServiceTest {
     @Test
     public void testGetHost() {
         String hostName = "John";
-        when(hostRepository.findById(hostName)).thenReturn(Optional.of(new Host(0,hostName, new Date(1990, 5, 10), new ArrayList<>())));
+        when(hostRepository.findByName(hostName)).thenReturn(Optional.of(new Host(0,hostName, new Date(1990, 5, 10), new ArrayList<>(), "qwe123", "USER")));
         HostDTO hostDTO = hostService.getHost(hostName);
         assertEquals(hostName, hostDTO.getName());
     }
 
     @Test
     public void testModifyHost() {
-        HostDTO hostDTO = new HostDTO(0, "John", new Date(1990, 5, 10), new ArrayList<>());
+        HostDTO hostDTO = new HostDTO(0, "John", new Date(1990, 5, 10), new ArrayList<>(), "qwe123", "USER");
         hostService.modifyHost(hostDTO);
         verify(hostRepository, times(1)).save(any(Host.class));
     }

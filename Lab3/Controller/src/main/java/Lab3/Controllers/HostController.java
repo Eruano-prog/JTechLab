@@ -5,10 +5,12 @@ import Lab3.Services.HostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/hosts")
+@RequestMapping("/host")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class HostController {
     public HostService hostService;
 
@@ -26,17 +28,16 @@ public class HostController {
 
     @PostMapping
     public ResponseEntity<HostDTO> addHost(@RequestBody HostDTO host){
-        hostService.addHost(host);
+        HostDTO savedHost = hostService.addHost(host);
 
-        return ResponseEntity.ok(host);
+        return ResponseEntity.ok(savedHost);
     }
 
-    @PutMapping("/{name}")
-    public ResponseEntity<HostDTO> modifyHost(@PathVariable String name, @RequestBody HostDTO host){
-        host.setName(name);
-        hostService.modifyHost(host);
+    @PutMapping()
+    public ResponseEntity<HostDTO> modifyHost(@RequestBody HostDTO host){
+        HostDTO savedHost = hostService.modifyHost(host);
 
-        return ResponseEntity.ok(host);
+        return ResponseEntity.ok(savedHost);
     }
 
     @DeleteMapping("/{name}")

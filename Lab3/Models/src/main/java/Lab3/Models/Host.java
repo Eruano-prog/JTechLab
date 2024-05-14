@@ -1,10 +1,7 @@
 package Lab3.Models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -16,14 +13,17 @@ import java.util.List;
 @NoArgsConstructor
 public class Host {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer id;
     public String name;
     public Date birthDate;
     @OneToMany
     public List<Cat> cats;
 
+    public String password;
+    public String roles;
+
     public HostDTO toDTO(){
-        return new HostDTO(id, name, birthDate, cats);
+        return new HostDTO(id, name, birthDate, cats, password, roles);
     }
 }
