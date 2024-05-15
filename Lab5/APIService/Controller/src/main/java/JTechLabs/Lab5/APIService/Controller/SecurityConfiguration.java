@@ -1,7 +1,8 @@
 package JTechLabs.Lab5.APIService.Controller;
 
 import JTechLabs.Lab5.APIService.BLL.HostService;
-import Lab5.Models.HostDTO;
+import JTechLabs.Lab5.APIService.Models.HostDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -47,7 +48,7 @@ public class SecurityConfiguration {
 
     @Bean
     @Autowired
-    public AuthenticationProvider authenticationProvider(HostService hostService){
+    public AuthenticationProvider authenticationProvider(HostService hostService) throws JsonProcessingException {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
         provider.setUserDetailsService(userDetailsService(hostService));

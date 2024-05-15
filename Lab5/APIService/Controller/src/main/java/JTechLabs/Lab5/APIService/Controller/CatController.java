@@ -1,8 +1,8 @@
     package JTechLabs.Lab5.APIService.Controller;
 
     import JTechLabs.Lab5.APIService.BLL.CatService;
-    import Lab5.Models.CatDTO;
-    import Lab5.Models.catColor;
+    import JTechLabs.Lab5.APIService.Models.CatDTO;
+    import JTechLabs.Lab5.APIService.Models.catColor;
     import com.fasterxml.jackson.core.JsonProcessingException;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.HttpStatus;

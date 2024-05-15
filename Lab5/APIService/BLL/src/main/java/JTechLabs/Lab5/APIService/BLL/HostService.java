@@ -1,10 +1,9 @@
 package JTechLabs.Lab5.APIService.BLL;
 
 import JTechLabs.Lab5.APIService.DLL.HostProducer;
-import Lab5.Models.Host;
-import Lab5.Models.HostDTO;
-import Lab5.Models.HostDetails;
-import Lab3.Repositories.IHostRepository;
+import JTechLabs.Lab5.APIService.Models.Host;
+import JTechLabs.Lab5.APIService.Models.HostDTO;
+import JTechLabs.Lab5.APIService.Models.HostDetails;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

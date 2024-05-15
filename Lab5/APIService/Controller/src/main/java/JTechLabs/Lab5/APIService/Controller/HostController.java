@@ -1,7 +1,7 @@
 package JTechLabs.Lab5.APIService.Controller;
 
 import JTechLabs.Lab5.APIService.BLL.HostService;
-import Lab5.Models.HostDTO;
+import JTechLabs.Lab5.APIService.Models.HostDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

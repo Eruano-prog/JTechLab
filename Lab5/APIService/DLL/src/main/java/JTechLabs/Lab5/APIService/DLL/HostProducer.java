@@ -1,6 +1,6 @@
 package JTechLabs.Lab5.APIService.DLL;
 
-import Lab5.Models.Host;
+import JTechLabs.Lab5.APIService.Models.Host;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

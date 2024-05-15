@@ -1,21 +1,15 @@
 package JTechLabs.Lab5.HostService.BLL;
 
 import JTechLabs.Lab5.HostService.DLL.IHostRepository;
-import Lab5.Models.Host;
-import Lab5.Models.HostDTO;
-import Lab5.Models.HostDetails;
+import JTechLabs.Lab5.HostService.Models.Host;
+import JTechLabs.Lab5.HostService.Models.HostDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
-public class HostService implements UserDetailsService {
+public class HostService {
     private final IHostRepository hostRepository;
     private final PasswordEncoder encoder;
 
@@ -53,12 +47,5 @@ public class HostService implements UserDetailsService {
         Host savedHost = hostRepository.save(convertedHost);
 
         return savedHost.toDTO();
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Host> host = hostRepository.findByName(username);
-        return host.map(HostDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("Host with name " + username + " not found"));
     }
 }

@@ -1,6 +1,6 @@
 package JTechLabs.Lab5.HostService.DLL;
 
-import Lab5.Models.Host;
+import JTechLabs.Lab5.HostService.Models.Host;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
