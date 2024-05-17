@@ -1,7 +1,6 @@
 package JTechLabs.Lab5.APIService.DLL;
 
-import JTechLabs.Lab5.APIService.Models.Cat;
-import JTechLabs.Lab5.APIService.Models.catColor;
+import JTechLabs.Lab5.APIService.Models.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,28 +19,33 @@ public class CatProducer {
         this.objectMapper = objectMapper;
     }
 
-    public void putCat(Cat cat) throws JsonProcessingException {
-        String catAsMessage = objectMapper.writeValueAsString(cat);
+    public void putCat(String hostName, CatDTO cat) throws JsonProcessingException {
+        CatWithHostnameMessage message = new CatWithHostnameMessage(hostName, cat);
+        String catAsMessage = objectMapper.writeValueAsString(message);
         kafkaTemplate.send("cat.put", catAsMessage);
     }
 
-    public void saveCat(Cat cat) throws JsonProcessingException {
-        String catAsMessage = objectMapper.writeValueAsString(cat);
+    public void saveCat(String hostName, CatDTO cat) throws JsonProcessingException {
+        CatWithHostnameMessage message = new CatWithHostnameMessage(hostName, cat);
+        String catAsMessage = objectMapper.writeValueAsString(message);
         kafkaTemplate.send("cat.save", catAsMessage);
     }
 
-    public void deleteCat(String name) throws JsonProcessingException {
-        String catAsMessage = objectMapper.writeValueAsString(name);
+    public void deleteCat(String hostName, String name) throws JsonProcessingException {
+        CatnameWithHostnameMessage message = new CatnameWithHostnameMessage(hostName, name);
+        String catAsMessage = objectMapper.writeValueAsString(message);
         kafkaTemplate.send("cat.delete", catAsMessage);
     }
 
-    public void getCat(String name) throws JsonProcessingException {
-        String catAsMessage = objectMapper.writeValueAsString(name);
-        kafkaTemplate.send("cat.delete", catAsMessage);
+    public void getCat(String hostName, String name) throws JsonProcessingException {
+        CatnameWithHostnameMessage message = new CatnameWithHostnameMessage(hostName, name);
+        String catAsMessage = objectMapper.writeValueAsString(message);
+        kafkaTemplate.send("cat.get", catAsMessage);
     }
 
     public void getCatByColor(String name, catColor color) throws JsonProcessingException {
-        String catAsMessage = objectMapper.writeValueAsString(name);
+        HostnameWithCatColorMessage message = new HostnameWithCatColorMessage(name, color);
+        String catAsMessage = objectMapper.writeValueAsString(message);
         kafkaTemplate.send("cat.getByColor", catAsMessage);
     }
 }
