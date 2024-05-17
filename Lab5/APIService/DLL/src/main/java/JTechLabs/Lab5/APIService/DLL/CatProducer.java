@@ -1,6 +1,7 @@
 package JTechLabs.Lab5.APIService.DLL;
 
 import JTechLabs.Lab5.APIService.Models.Cat;
+import JTechLabs.Lab5.APIService.Models.catColor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,18 @@ public class CatProducer {
         kafkaTemplate.send("cat.save", catAsMessage);
     }
 
-    public void deleteCat(Cat cat) throws JsonProcessingException {
-        String catAsMessage = objectMapper.writeValueAsString(cat);
+    public void deleteCat(String name) throws JsonProcessingException {
+        String catAsMessage = objectMapper.writeValueAsString(name);
         kafkaTemplate.send("cat.delete", catAsMessage);
+    }
+
+    public void getCat(String name) throws JsonProcessingException {
+        String catAsMessage = objectMapper.writeValueAsString(name);
+        kafkaTemplate.send("cat.delete", catAsMessage);
+    }
+
+    public void getCatByColor(String name, catColor color) throws JsonProcessingException {
+        String catAsMessage = objectMapper.writeValueAsString(name);
+        kafkaTemplate.send("cat.getByColor", catAsMessage);
     }
 }

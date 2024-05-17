@@ -4,14 +4,11 @@ import JTechLabs.Lab5.APIService.DLL.CatProducer;
 import JTechLabs.Lab5.APIService.DLL.HostProducer;
 import JTechLabs.Lab5.APIService.Models.Cat;
 import JTechLabs.Lab5.APIService.Models.CatDTO;
-import JTechLabs.Lab5.APIService.Models.Host;
 import JTechLabs.Lab5.APIService.Models.catColor;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -27,55 +24,40 @@ public class CatService{
     }
 
     public void addCat(String hostname, CatDTO cat) throws JsonProcessingException {
-        Host host = hostProducer.findByName(hostname)
-                .orElseThrow(() -> new EntityNotFoundException("Host " + hostname + " does not exist"));
+//        Host host = hostProducer.findByName(hostname)
+//                .orElseThrow(() -> new EntityNotFoundException("Host " + hostname + " does not exist"));
 
         Cat catToAdd = cat.toCat();
-        catToAdd.setHost(host);
+//        catToAdd.setHost(host);
 
         catProducer.putCat(catToAdd);
     }
 
     public void deleteCat(String hostname, String name) throws JsonProcessingException {
-        Cat cat = catProducer.findByHost_NameAndNameIgnoreCase(hostname, name)
-                .orElseThrow(() -> new EntityNotFoundException("Cat with name " + name + " not found"));
+//        Cat cat = catProducer.findByHost_NameAndNameIgnoreCase(hostname, name)
+//                .orElseThrow(() -> new EntityNotFoundException("Cat with name " + name + " not found"));
 
-        catProducer.deleteCat(cat);
+        catProducer.deleteCat(name);
     }
 
-    public CatDTO getCat(String hostname, String name){
-        Cat cat = catProducer.findByHost_NameAndNameIgnoreCase(hostname, name)
-                .orElseThrow(() -> new EntityNotFoundException("Cat with name " + name + " not found"));
-        return cat.toDTO();
+    public void getCat(String hostname, String name) throws JsonProcessingException {
+//        Cat cat = catProducer.findByHost_NameAndNameIgnoreCase(hostname, name)
+//                .orElseThrow(() -> new EntityNotFoundException("Cat with name " + name + " not found"));
+        catProducer.getCat(name);
     }
 
     public void modifyCat(String hostname, CatDTO cat) throws JsonProcessingException {
-        Host host = hostProducer.findByName(hostname)
-                .orElseThrow(() -> new EntityNotFoundException("Host " + hostname + " does not exist"));
+//        Host host = hostProducer.findByName(hostname)
+//                .orElseThrow(() -> new EntityNotFoundException("Host " + hostname + " does not exist"));
 
         Cat catToModify = cat.toCat();
-        catToModify.setHost(host);
+//        catToModify.setHost(host);
 
         catProducer.saveCat(catToModify);
     }
 
-    public void addFriend(String receiver, CatDTO catFriend) throws JsonProcessingException {
+    public void getCatsByColor(String hostname, catColor color) throws JsonProcessingException {
 
-        Cat catToAdd = catFriend.toCat();
-
-        Cat cat = catProducer.findByNameIgnoreCase(receiver)
-                .orElseThrow(() -> new EntityNotFoundException("Cat with name " + catToAdd.name + " not found"));
-
-        cat.friends.add(catToAdd);
-
-        catProducer.saveCat(cat);
-    }
-
-    public List<CatDTO> getCatsByColor(String hostname, catColor color){
-
-        return catProducer.findByHost_NameAndColor(hostname, color)
-                .stream()
-                .map(Cat::toDTO)
-                .collect(Collectors.toList());
+        catProducer.getCatByColor(hostname, color);
     }
 }

@@ -1,8 +1,9 @@
-package JTechLabs.Lab5.APIService.Controller;
+package JTechLabs.Lab5.APIService.BLL;
 
-import JTechLabs.Lab5.APIService.BLL.HostService;
+import JTechLabs.Lab5.APIService.DLL.HostProducer;
 import JTechLabs.Lab5.APIService.Models.HostDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -35,6 +36,11 @@ public class SecurityConfiguration {
     @Autowired
     public UserDetailsService userDetailsService(HostService hostService) {
         return hostService;
+    }
+
+    @Bean
+    public HostService hostService(){
+        return new HostService()
     }
 
     @Bean

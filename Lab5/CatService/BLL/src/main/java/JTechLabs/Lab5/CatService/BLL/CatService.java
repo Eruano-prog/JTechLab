@@ -2,9 +2,11 @@ package JTechLabs.Lab5.CatService.BLL;
 
 
 import JTechLabs.Lab5.CatService.DLL.ICatRepository;
+import JTechLabs.Lab5.CatService.DLL.IHostRepository;
 import JTechLabs.Lab5.CatService.Models.Cat;
 import JTechLabs.Lab5.CatService.Models.CatDTO;
 import JTechLabs.Lab5.CatService.Models.Host;
+import JTechLabs.Lab5.CatService.Models.catColor;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

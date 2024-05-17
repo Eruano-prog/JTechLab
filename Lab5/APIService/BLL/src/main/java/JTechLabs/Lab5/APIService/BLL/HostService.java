@@ -1,11 +1,11 @@
 package JTechLabs.Lab5.APIService.BLL;
 
 import JTechLabs.Lab5.APIService.DLL.HostProducer;
+import JTechLabs.Lab5.APIService.DLL.IAuthRepository;
 import JTechLabs.Lab5.APIService.Models.Host;
 import JTechLabs.Lab5.APIService.Models.HostDTO;
 import JTechLabs.Lab5.APIService.Models.HostDetails;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,11 +19,13 @@ import java.util.Optional;
 public class HostService implements UserDetailsService {
     private final HostProducer hostProducer;
     private final PasswordEncoder encoder;
+    private final IAuthRepository authRepository;
 
     @Autowired
-    public HostService(HostProducer hostProducer, PasswordEncoder encoder) {
+    public HostService(HostProducer hostProducer, PasswordEncoder encoder, IAuthRepository authRepository) {
         this.hostProducer = hostProducer;
         this.encoder = encoder;
+        this.authRepository = authRepository;
     }
 
     public void addHost(HostDTO host) throws JsonProcessingException {
@@ -33,17 +35,11 @@ public class HostService implements UserDetailsService {
     }
 
     public void deleteHost(String name) throws JsonProcessingException {
-        Host host = hostProducer.findByName(name)
-                .orElseThrow(() -> new EntityNotFoundException("Host with name " + name + " not found"));
-
-        hostProducer.deleteHost(host);
+        hostProducer.deleteHost(name);
     }
 
-    public HostDTO getHost(String name){
-        Host host = hostProducer.findByName(name)
-                .orElseThrow(() -> new EntityNotFoundException("Host with name " + name + " not found"));
-
-        return host.toDTO();
+    public void getHost(String name) throws JsonProcessingException {
+        hostProducer.getHost(name);
     }
 
     public void modifyHost(HostDTO host) throws JsonProcessingException {
@@ -53,7 +49,7 @@ public class HostService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Host> host = hostProducer.findByName(username);
+        Optional<Host> host = authRepository.findByName(username);
         return host.map(HostDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("Host with name " + username + " not found"));
     }

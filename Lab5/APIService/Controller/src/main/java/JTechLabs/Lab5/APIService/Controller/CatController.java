@@ -26,17 +26,28 @@
         }
 
         @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = "name")
-        public ResponseEntity<CatDTO> getCat(Authentication authentication, @RequestParam String name) {
+        public ResponseEntity<String> getCat(Authentication authentication, @RequestParam String name) {
             String username = authentication.getName();
 
-            CatDTO cat = catService.getCat(username, name);
-            return ResponseEntity.ok(cat);
+            CatDTO cat = null;
+            try {
+                catService.getCat(username, name);
+            } catch (JsonProcessingException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Parssing error");
+            }
+            return ResponseEntity.ok("Message accepted");
         }
 
         @GetMapping(params = "color")
-        public ResponseEntity<List<CatDTO>> getCatsByColor(Authentication authentication, @RequestParam catColor color) {
+        public ResponseEntity<String> getCatsByColor(Authentication authentication, @RequestParam catColor color) {
             String username = authentication.getName();
-            return ResponseEntity.ok(catService.getCatsByColor(username, color));
+            try {
+                catService.getCatsByColor(username, color);
+            } catch (JsonProcessingException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Parssing error");
+            }
+
+            return ResponseEntity.ok("Message accepted");
         }
 
         @PostMapping

@@ -29,8 +29,13 @@ public class HostProducer {
         kafkaTemplate.send("host.save", hostAsMessage);
     }
 
-    public void deleteHost(Host host) throws JsonProcessingException {
-        String hostAsMessage = objectMapper.writeValueAsString(host);
+    public void deleteHost(String hostName) throws JsonProcessingException {
+        String hostAsMessage = objectMapper.writeValueAsString(hostName);
         kafkaTemplate.send("host.delete", hostAsMessage);
+    }
+
+    public void getHost(String hostName) throws JsonProcessingException {
+        String hostAsMessage = objectMapper.writeValueAsString(hostName);
+        kafkaTemplate.send("host.get", hostAsMessage);
     }
 }
