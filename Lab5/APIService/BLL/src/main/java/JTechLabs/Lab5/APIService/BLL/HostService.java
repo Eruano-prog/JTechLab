@@ -2,9 +2,8 @@ package JTechLabs.Lab5.APIService.BLL;
 
 import JTechLabs.Lab5.APIService.DLL.HostProducer;
 import JTechLabs.Lab5.APIService.DLL.IAuthRepository;
-import JTechLabs.Lab5.APIService.Models.Host;
-import JTechLabs.Lab5.APIService.Models.HostDTO;
-import JTechLabs.Lab5.APIService.Models.HostDetails;
+import JTechLabs.Lab5.APIService.DLL.IRequestRepository;
+import JTechLabs.Lab5.APIService.Models.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,12 +20,14 @@ public class HostService implements UserDetailsService {
     private final HostProducer hostProducer;
     private final PasswordEncoder encoder;
     private final IAuthRepository authRepository;
+    private final IRequestRepository requestRepository;
 
     @Autowired
-    public HostService(HostProducer hostProducer, PasswordEncoder encoder, IAuthRepository authRepository) {
+    public HostService(HostProducer hostProducer, PasswordEncoder encoder, IAuthRepository authRepository, IRequestRepository requestRepository) {
         this.hostProducer = hostProducer;
         this.encoder = encoder;
         this.authRepository = authRepository;
+        this.requestRepository = requestRepository;
     }
 
     public void addHost(HostDTO host) throws JsonProcessingException {
@@ -38,13 +40,18 @@ public class HostService implements UserDetailsService {
         hostProducer.deleteHost(name);
     }
 
-    public void getHost(String name) throws JsonProcessingException {
-        hostProducer.getHost(name);
+    public void getHost(Integer requestID, String name) throws JsonProcessingException {
+        hostProducer.getHost(requestID, name);
     }
 
     public void modifyHost(HostDTO host) throws JsonProcessingException {
         Host convertedHost = host.toHost();
-        hostProducer.saveHost(convertedHost);
+        hostProducer.putHost(convertedHost);
+    }
+
+    public List<Host> checkRequest(Integer requestId) throws JsonProcessingException {
+        HostGetRequest request = requestRepository.findByRequestID(requestId);
+        return request.getResult();
     }
 
     @Override

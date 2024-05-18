@@ -1,6 +1,8 @@
 package JTechLabs.Lab5.APIService.DLL;
 
 import JTechLabs.Lab5.APIService.Models.Host;
+import JTechLabs.Lab5.APIService.Models.HostGetMessage;
+import JTechLabs.Lab5.APIService.Models.HostGetRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +36,9 @@ public class HostProducer {
         kafkaTemplate.send("host.delete", hostAsMessage);
     }
 
-    public void getHost(String hostName) throws JsonProcessingException {
-        String hostAsMessage = objectMapper.writeValueAsString(hostName);
+    public void getHost(Integer requestId, String hostName) throws JsonProcessingException {
+        HostGetMessage message = new HostGetMessage(requestId, hostName);
+        String hostAsMessage = objectMapper.writeValueAsString(message);
         kafkaTemplate.send("host.get", hostAsMessage);
     }
 }

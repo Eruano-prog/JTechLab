@@ -53,7 +53,7 @@ public class SecurityConfiguration {
         provider.setUserDetailsService(userDetailsService(hostService));
 
         try{
-            hostService.getHost("Root");
+            hostService.getHost(0, "Root");
         }
         catch (EntityNotFoundException ex) {
             HostDTO host = new HostDTO(1, "Root", new Date(), null, "admin", "ROLE_ADMIN");

@@ -1,22 +1,29 @@
 package JTechLabs.Lab5.HostService.BLL;
 
 import JTechLabs.Lab5.HostService.DLL.IHostRepository;
+import JTechLabs.Lab5.HostService.DLL.IRequestRepository;
 import JTechLabs.Lab5.HostService.Models.Host;
 import JTechLabs.Lab5.HostService.Models.HostDTO;
+import JTechLabs.Lab5.HostService.Models.HostGetRequest;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class HostService {
     private final IHostRepository hostRepository;
+    private final IRequestRepository requestRepository;
     private final PasswordEncoder encoder;
 
     @Autowired
-    public HostService(IHostRepository hostRepository, PasswordEncoder encoder) {
+    public HostService(IHostRepository hostRepository, PasswordEncoder encoder, IRequestRepository requestRepository) {
         this.hostRepository = hostRepository;
         this.encoder = encoder;
+        this.requestRepository = requestRepository;
     }
 
     public HostDTO addHost(HostDTO host){
@@ -34,11 +41,15 @@ public class HostService {
         hostRepository.delete(host);
     }
 
-    public HostDTO getHost(String name){
+    public void getHost(Integer requestID, String name){
         Host host = hostRepository.findByName(name)
                 .orElseThrow(() -> new EntityNotFoundException("Host with name " + name + " not found"));
 
-        return host.toDTO();
+        List<Host> results = new ArrayList<>();
+        results.add(host);
+
+        HostGetRequest request = new HostGetRequest(null, requestID, results);
+        requestRepository.save(request);
     }
 
     public HostDTO modifyHost(HostDTO host){

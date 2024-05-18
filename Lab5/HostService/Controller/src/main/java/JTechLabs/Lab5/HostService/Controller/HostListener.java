@@ -1,6 +1,7 @@
 package JTechLabs.Lab5.HostService.Controller;
 
 import JTechLabs.Lab5.HostService.Models.HostDTO;
+import JTechLabs.Lab5.HostService.Models.HostGetMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +58,18 @@ public class HostListener {
         }
 
         hostService.modifyHost(host);
+    }
+
+    @KafkaListener(topics = "host.get")
+    public void getHostPoint(String  message){
+        HostGetMessage getMessage;
+        try {
+            getMessage = mapper.readValue(message, HostGetMessage.class);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+
+        hostService.getHost(getMessage.getRequestID(), getMessage.getHostName());
     }
 }
