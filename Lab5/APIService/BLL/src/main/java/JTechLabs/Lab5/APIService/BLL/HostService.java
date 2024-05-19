@@ -5,6 +5,8 @@ import JTechLabs.Lab5.APIService.DLL.IAuthRepository;
 import JTechLabs.Lab5.APIService.DLL.IRequestRepository;
 import JTechLabs.Lab5.APIService.Models.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,13 +24,15 @@ public class HostService implements UserDetailsService {
     private final PasswordEncoder encoder;
     private final IAuthRepository authRepository;
     private final IRequestRepository requestRepository;
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    public HostService(HostProducer hostProducer, PasswordEncoder encoder, IAuthRepository authRepository, IRequestRepository requestRepository) {
+    public HostService(HostProducer hostProducer, PasswordEncoder encoder, IAuthRepository authRepository, IRequestRepository requestRepository, ObjectMapper objectMapper) {
         this.hostProducer = hostProducer;
         this.encoder = encoder;
         this.authRepository = authRepository;
         this.requestRepository = requestRepository;
+        this.objectMapper = objectMapper;
     }
 
     public void addHost(HostDTO host) throws JsonProcessingException {
@@ -51,7 +56,8 @@ public class HostService implements UserDetailsService {
 
     public List<Host> checkRequest(Integer requestId) throws JsonProcessingException {
         HostGetRequest request = requestRepository.findByRequestID(requestId);
-        return request.getResult();
+
+        return objectMapper.readValue(request.getResult(), new TypeReference<List<Host>>(){});
     }
 
     @Override

@@ -65,11 +65,9 @@ public class HostListener {
         HostGetMessage getMessage;
         try {
             getMessage = mapper.readValue(message, HostGetMessage.class);
+            hostService.getHost(getMessage.getRequestID(), getMessage.getHostName());
         } catch (JsonProcessingException e) {
             System.out.println(e.getMessage());
-            return;
         }
-
-        hostService.getHost(getMessage.getRequestID(), getMessage.getHostName());
     }
 }

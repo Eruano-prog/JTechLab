@@ -1,10 +1,10 @@
 package JTechLabs.Lab5.APIService.DLL;
 
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.ser.std.StringSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
@@ -18,6 +18,12 @@ import java.util.Map;
 @Configuration
 public class KafkaConfig {
     private String bootstrapServers="localhost:9092";
+    private final ObjectMapper mapper;
+
+    @Autowired
+    public KafkaConfig(ObjectMapper mapper){
+        this.mapper = mapper;
+    }
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
@@ -30,75 +36,74 @@ public class KafkaConfig {
                 StringSerializer.class);
         configProps.put(
                 ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-                JsonSerializer.class);
+                StringSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
     }
-
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 
-//    @Bean
-//    public NewTopic CatPutTopic() {
-//        return TopicBuilder
-//                .name("cat.put")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
-//    @Bean
-//    public NewTopic CatSaveTopic() {
-//        return TopicBuilder
-//                .name("cat.save")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
-//    @Bean
-//    public NewTopic CatDeleteTopic() {
-//        return TopicBuilder
-//                .name("cat.delete")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
-//    @Bean
-//    public NewTopic HostPutTopic() {
-//        return TopicBuilder
-//                .name("host.put")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
-//    @Bean
-//    public NewTopic HostSaveTopic() {
-//        return TopicBuilder
-//                .name("host.save")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
-//    @Bean
-//    public NewTopic HostDeleteTopic() {
-//        return TopicBuilder
-//                .name("host.delete")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
-//    @Bean
-//    public NewTopic HostGetByColor() {
-//        return TopicBuilder
-//                .name("cat.getByColor")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
+    @Bean
+    public NewTopic CatPutTopic() {
+        return TopicBuilder
+                .name("cat.put")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic CatSaveTopic() {
+        return TopicBuilder
+                .name("cat.save")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic CatDeleteTopic() {
+        return TopicBuilder
+                .name("cat.delete")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic HostPutTopic() {
+        return TopicBuilder
+                .name("host.put")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic HostSaveTopic() {
+        return TopicBuilder
+                .name("host.save")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic HostDeleteTopic() {
+        return TopicBuilder
+                .name("host.delete")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic HostGetByColor() {
+        return TopicBuilder
+                .name("cat.getByColor")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 }

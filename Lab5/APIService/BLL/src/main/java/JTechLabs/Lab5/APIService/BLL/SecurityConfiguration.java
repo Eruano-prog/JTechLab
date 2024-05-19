@@ -47,7 +47,7 @@ public class SecurityConfiguration {
 
     @Bean
     @Autowired
-    public AuthenticationProvider authenticationProvider(HostService hostService) throws JsonProcessingException {
+    public AuthenticationProvider authenticationProvider(HostService hostService) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
         provider.setUserDetailsService(userDetailsService(hostService));
@@ -57,7 +57,14 @@ public class SecurityConfiguration {
         }
         catch (EntityNotFoundException ex) {
             HostDTO host = new HostDTO(1, "Root", new Date(), null, "admin", "ROLE_ADMIN");
-            hostService.addHost(host);
+            try {
+                hostService.addHost(host);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+        catch (JsonProcessingException ex) {
+            ex.printStackTrace();
         }
 
         return provider;

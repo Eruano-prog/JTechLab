@@ -21,5 +21,5 @@ public class HostGetRequest {
     @GeneratedValue()
     public Integer id;
     public Integer requestID;
-    public List<Host> result;
+    public String result;
 }

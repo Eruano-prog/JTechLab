@@ -5,6 +5,8 @@ import JTechLabs.Lab5.HostService.DLL.IRequestRepository;
 import JTechLabs.Lab5.HostService.Models.Host;
 import JTechLabs.Lab5.HostService.Models.HostDTO;
 import JTechLabs.Lab5.HostService.Models.HostGetRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,12 +20,14 @@ public class HostService {
     private final IHostRepository hostRepository;
     private final IRequestRepository requestRepository;
     private final PasswordEncoder encoder;
+    private final ObjectMapper mapper;
 
     @Autowired
-    public HostService(IHostRepository hostRepository, PasswordEncoder encoder, IRequestRepository requestRepository) {
+    public HostService(IHostRepository hostRepository, PasswordEncoder encoder, IRequestRepository requestRepository, ObjectMapper mapper) {
         this.hostRepository = hostRepository;
         this.encoder = encoder;
         this.requestRepository = requestRepository;
+        this.mapper = mapper;
     }
 
     public HostDTO addHost(HostDTO host){
@@ -41,13 +45,14 @@ public class HostService {
         hostRepository.delete(host);
     }
 
-    public void getHost(Integer requestID, String name){
+    public void getHost(Integer requestID, String name) throws JsonProcessingException {
         Host host = hostRepository.findByName(name)
                 .orElseThrow(() -> new EntityNotFoundException("Host with name " + name + " not found"));
 
-        List<Host> results = new ArrayList<>();
-        results.add(host);
+        List<Host> hosts = new ArrayList<>();
+        hosts.add(host);
 
+        String results = mapper.writeValueAsString(hosts);
         HostGetRequest request = new HostGetRequest(null, requestID, results);
         requestRepository.save(request);
     }
