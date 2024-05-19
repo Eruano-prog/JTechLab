@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface IAuthRepository extends JpaRepository<Host, Integer> {
 
-    public Optional<Host> findByName(String username);
+    Optional<Host> findByName(String username);
 }
