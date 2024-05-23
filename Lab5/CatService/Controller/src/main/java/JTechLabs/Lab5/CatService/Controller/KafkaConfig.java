@@ -1,3 +1,5 @@
+package JTechLabs.Lab5.CatService.Controller;
+
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

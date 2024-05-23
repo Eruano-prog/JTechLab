@@ -1,3 +1,5 @@
+package JTechLabs.Lab5.CatService.Controller;
+
 import JTechLabs.Lab5.CatService.BLL.CatService;
 import JTechLabs.Lab5.CatService.Models.CatWithHostnameMessage;
 import JTechLabs.Lab5.CatService.Models.CatnameWithHostnameMessage;
