@@ -1,11 +1,15 @@
 package JTechLabs.Lab5.APIService.Models;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
+@NoArgsConstructor
+@Setter
 public class CatDTO {
     public Integer id;
     public String name;

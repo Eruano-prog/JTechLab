@@ -42,7 +42,7 @@ public class CatListener {
             return;
         }
 
-        catService.addCat(cat.getHostName(), cat.getCat());
+        catService.deleteCat(cat.getHostName(), cat.getCat().name);
     }
 
     @KafkaListener(topics = "cat.put")
