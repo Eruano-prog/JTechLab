@@ -32,7 +32,7 @@ public class HostService {
 
     public HostDTO addHost(HostDTO host){
         Host convertedHost = host.toHost();
-        convertedHost.setPassword(encoder.encode(convertedHost.getPassword()));
+
         Host savedHost = hostRepository.save(convertedHost);
 
         return savedHost.toDTO();
