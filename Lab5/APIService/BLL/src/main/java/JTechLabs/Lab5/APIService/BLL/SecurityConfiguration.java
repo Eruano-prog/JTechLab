@@ -1,5 +1,7 @@
 package JTechLabs.Lab5.APIService.BLL;
 
+import JTechLabs.Lab5.APIService.DLL.IAuthRepository;
+import JTechLabs.Lab5.APIService.Models.Host;
 import JTechLabs.Lab5.APIService.Models.HostDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.persistence.EntityNotFoundException;
@@ -47,24 +49,18 @@ public class SecurityConfiguration {
 
     @Bean
     @Autowired
-    public AuthenticationProvider authenticationProvider(HostService hostService) {
+    public AuthenticationProvider authenticationProvider(HostService hostService, IAuthRepository authRepository, PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
         provider.setUserDetailsService(userDetailsService(hostService));
 
         try{
-            hostService.getHost(0, "Root");
+            authRepository.findByName("Root")
+                    .orElseThrow(() -> new EntityNotFoundException("Root not found"));
         }
         catch (EntityNotFoundException ex) {
-            HostDTO host = new HostDTO(1, "Root", new Date(), null, "admin", "ROLE_ADMIN");
-            try {
-                hostService.addHost(host);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        }
-        catch (JsonProcessingException ex) {
-            ex.printStackTrace();
+            Host host = new Host(1, "Root", new Date(), null, passwordEncoder.encode("admin"), "ROLE_ADMIN");
+            authRepository.save(host);
         }
 
         return provider;

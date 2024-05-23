@@ -71,7 +71,7 @@ public class CatListener {
         catService.getCat(cat.getHostname(), cat.getCatname());
     }
 
-    @KafkaListener(topics = "cat.get")
+    @KafkaListener(topics = "cat.getByColor")
     public void getCatByColorPoint(String message){
         HostnameWithCatColorMessage cat;
         try {

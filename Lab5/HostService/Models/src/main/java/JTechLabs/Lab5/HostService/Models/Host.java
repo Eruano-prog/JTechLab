@@ -20,7 +20,7 @@ public class Host {
     public Integer id;
     public String name;
     public Date birthDate;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     public List<Cat> cats;
 
     public String password;
