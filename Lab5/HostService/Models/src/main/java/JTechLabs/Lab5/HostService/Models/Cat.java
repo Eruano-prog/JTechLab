@@ -34,6 +34,6 @@ public class Cat {
     public List<Cat> friends = new ArrayList<>();
 
     public CatDTO toDTO() {
-        return new CatDTO(this.id, this.name, this.birthDate, this.type, this.color, this.host, this.friends);
+        return new CatDTO(this.id, this.name, this.birthDate, this.type, this.color, this.host.toDTO(), this.friends);
     }
 }

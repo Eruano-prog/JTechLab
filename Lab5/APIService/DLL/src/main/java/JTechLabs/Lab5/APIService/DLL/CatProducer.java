@@ -37,8 +37,8 @@ public class CatProducer {
         kafkaTemplate.send("cat.delete", catAsMessage);
     }
 
-    public void getCat(String hostName, String name) throws JsonProcessingException {
-        CatnameWithHostnameMessage message = new CatnameWithHostnameMessage(hostName, name);
+    public void getCat(String hostName, String name, Integer requestID) throws JsonProcessingException {
+        CatnameWithHostnameGetMessage message = new CatnameWithHostnameGetMessage(hostName, name, requestID);
         String catAsMessage = objectMapper.writeValueAsString(message);
         kafkaTemplate.send("cat.get", catAsMessage);
     }

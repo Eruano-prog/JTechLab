@@ -3,14 +3,17 @@ package JTechLabs.Lab5.CatService.BLL;
 
 import JTechLabs.Lab5.CatService.DLL.ICatRepository;
 import JTechLabs.Lab5.CatService.DLL.IHostRepository;
-import JTechLabs.Lab5.CatService.Models.Cat;
-import JTechLabs.Lab5.CatService.Models.CatDTO;
-import JTechLabs.Lab5.CatService.Models.Host;
-import JTechLabs.Lab5.CatService.Models.catColor;
+import JTechLabs.Lab5.CatService.DLL.IRequestRepository;
+import JTechLabs.Lab5.CatService.Models.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,11 +22,15 @@ import java.util.stream.Collectors;
 public class CatService {
     private final ICatRepository catRepository;
     private final IHostRepository hostRepository;
+    private final IRequestRepository requestRepository;
+    private final ObjectMapper mapper;
 
     @Autowired
-    public CatService(ICatRepository catRepository, IHostRepository hostRepository) {
+    public CatService(ICatRepository catRepository, IHostRepository hostRepository, IRequestRepository requestRepository, ObjectMapper mapper) {
         this.catRepository = catRepository;
         this.hostRepository = hostRepository;
+        this.requestRepository = requestRepository;
+        this.mapper = mapper;
     }
 
     public CatDTO addCat(String hostname, CatDTO cat) {
@@ -51,9 +58,21 @@ public class CatService {
         catRepository.delete(cat);
     }
 
-    public CatDTO getCat(String hostname, String name){
+    @Transactional
+    public CatDTO getCat(String hostname, String name, Integer requestID){
         Cat cat = catRepository.findByHost_NameAndNameIgnoreCase(hostname, name)
                 .orElseThrow(() -> new EntityNotFoundException("Cat with name " + name + " not found"));
+
+        ArrayList<CatDTO> catDTOs = new ArrayList<>();
+        catDTOs.add(cat.toDTO());
+
+        try {
+            String result = mapper.writeValueAsString(catDTOs);
+            CatGetRequest request = new CatGetRequest(null, requestID, hostname, result);
+            requestRepository.save(request);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
         return cat.toDTO();
     }
 

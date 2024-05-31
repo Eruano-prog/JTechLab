@@ -1,10 +1,12 @@
 package JTechLabs.Lab5.APIService.Models;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cascade;
 
 import java.util.ArrayList;
@@ -33,7 +35,10 @@ public class Cat {
     @ManyToMany(fetch = FetchType.LAZY)
     public List<Cat> friends = new ArrayList<>();
 
+    @Transactional
     public CatDTO toDTO() {
-        return new CatDTO(this.id, this.name, this.birthDate, this.type, this.color, this.host, this.friends);
+        Hibernate.initialize(this.host); // Инициализируем ленивую ассоциацию
+        Hibernate.initialize(this.friends); // Инициализируем ленивую ассоциацию
+        return new CatDTO(this.id, this.name, this.birthDate, this.type, this.color, this.host.toDTO(), this.friends);
     }
 }

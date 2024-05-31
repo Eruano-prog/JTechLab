@@ -2,6 +2,7 @@ package JTechLabs.Lab5.APIService.Controller;
 
 import JTechLabs.Lab5.APIService.BLL.CatService;
 import JTechLabs.Lab5.APIService.Models.CatDTO;
+import JTechLabs.Lab5.APIService.Models.Host;
 import JTechLabs.Lab5.APIService.Models.catColor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/cat")
@@ -28,13 +30,26 @@ public class CatController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = "name")
     public ResponseEntity<String> getCat(Authentication authentication, @RequestParam String name) {
         String username = authentication.getName();
+        Random random = new Random();
+        Integer requestID = random.nextInt(10000);
 
         try {
-            catService.getCat(username, name);
+            catService.getCat(username, name, requestID);
         } catch (JsonProcessingException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Parssing error");
         }
-        return ResponseEntity.ok("Message accepted");
+        return ResponseEntity.ok("/cat/request/"+requestID);
+    }
+
+    @GetMapping(value="/request/{requestID}")
+    public ResponseEntity<List<CatDTO>> getRequest(@PathVariable Integer requestID){
+        List<CatDTO> cats = null;
+        try {
+            cats = catService.checkRequest(requestID);
+        } catch (JsonProcessingException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        return ResponseEntity.ok(cats);
     }
 
     @GetMapping(params = "color")

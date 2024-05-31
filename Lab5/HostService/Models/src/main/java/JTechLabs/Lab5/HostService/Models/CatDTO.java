@@ -1,5 +1,6 @@
 package JTechLabs.Lab5.HostService.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 
 import java.util.Date;
@@ -12,10 +13,12 @@ public class CatDTO {
     public Date birthDate;
     public String type;
     public catColor color;
-    public Host host;
+    @JsonIgnore
+    public HostDTO host;
+    @JsonIgnore
     public List<Cat> friends;
 
     public Cat toCat(){
-        return new Cat(id, name, birthDate, type, color, host, friends);
+        return new Cat(id, name, birthDate, type, color, host.toHost(), friends);
     }
 }

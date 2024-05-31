@@ -2,6 +2,7 @@ package JTechLabs.Lab5.CatService.Controller;
 
 import JTechLabs.Lab5.CatService.BLL.CatService;
 import JTechLabs.Lab5.CatService.Models.CatWithHostnameMessage;
+import JTechLabs.Lab5.CatService.Models.CatnameWithHostnameGetMessage;
 import JTechLabs.Lab5.CatService.Models.CatnameWithHostnameMessage;
 import JTechLabs.Lab5.CatService.Models.HostnameWithCatColorMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -61,15 +62,15 @@ public class CatListener {
 
     @KafkaListener(topics = "cat.get")
     public void getCatPoint(String message){
-        CatnameWithHostnameMessage cat;
+        CatnameWithHostnameGetMessage getMessage;
         try {
-            cat = mapper.readValue(message, CatnameWithHostnameMessage.class);
+            getMessage = mapper.readValue(message, CatnameWithHostnameGetMessage.class);
         } catch (JsonProcessingException e) {
             System.out.println(e.getMessage());
             return;
         }
 
-        catService.getCat(cat.getHostname(), cat.getCatname());
+        catService.getCat(getMessage.getHostname(), getMessage.getCatname(), getMessage.getRequestID());
     }
 
     @KafkaListener(topics = "cat.getByColor")

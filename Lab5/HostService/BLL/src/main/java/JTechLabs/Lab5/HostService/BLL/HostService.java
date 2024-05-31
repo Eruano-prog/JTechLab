@@ -19,13 +19,11 @@ import java.util.List;
 public class HostService {
     private final IHostRepository hostRepository;
     private final IRequestRepository requestRepository;
-    private final PasswordEncoder encoder;
     private final ObjectMapper mapper;
 
     @Autowired
-    public HostService(IHostRepository hostRepository, PasswordEncoder encoder, IRequestRepository requestRepository, ObjectMapper mapper) {
+    public HostService(IHostRepository hostRepository, IRequestRepository requestRepository, ObjectMapper mapper) {
         this.hostRepository = hostRepository;
-        this.encoder = encoder;
         this.requestRepository = requestRepository;
         this.mapper = mapper;
     }
