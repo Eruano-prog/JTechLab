@@ -1,10 +1,7 @@
 package JTechLabs.Lab5.CatService.Controller;
 
 import JTechLabs.Lab5.CatService.BLL.CatService;
-import JTechLabs.Lab5.CatService.Models.CatWithHostnameMessage;
-import JTechLabs.Lab5.CatService.Models.CatnameWithHostnameGetMessage;
-import JTechLabs.Lab5.CatService.Models.CatnameWithHostnameMessage;
-import JTechLabs.Lab5.CatService.Models.HostnameWithCatColorMessage;
+import JTechLabs.Lab5.CatService.Models.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,14 +72,14 @@ public class CatListener {
 
     @KafkaListener(topics = "cat.getByColor")
     public void getCatByColorPoint(String message){
-        HostnameWithCatColorMessage cat;
+        HostnameWithCatColorGetMessage cat;
         try {
-            cat = mapper.readValue(message, HostnameWithCatColorMessage.class);
+            cat = mapper.readValue(message, HostnameWithCatColorGetMessage.class);
         } catch (JsonProcessingException e) {
             System.out.println(e.getMessage());
             return;
         }
 
-        catService.getCatsByColor(cat.getHostName(), cat.getColor());
+        catService.getCatsByColor(cat.getHostName(), cat.getColor(), cat.getRequestID());
     }
 }

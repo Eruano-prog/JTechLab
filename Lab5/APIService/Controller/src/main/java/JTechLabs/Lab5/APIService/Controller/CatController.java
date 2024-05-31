@@ -2,7 +2,6 @@ package JTechLabs.Lab5.APIService.Controller;
 
 import JTechLabs.Lab5.APIService.BLL.CatService;
 import JTechLabs.Lab5.APIService.Models.CatDTO;
-import JTechLabs.Lab5.APIService.Models.Host;
 import JTechLabs.Lab5.APIService.Models.catColor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,13 +54,16 @@ public class CatController {
     @GetMapping(params = "color")
     public ResponseEntity<String> getCatsByColor(Authentication authentication, @RequestParam catColor color) {
         String username = authentication.getName();
+        Random random = new Random();
+        Integer requestID = random.nextInt(10000);
+
         try {
-            catService.getCatsByColor(username, color);
+            catService.getCatsByColor(username, color, requestID);
         } catch (JsonProcessingException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Parsing error");
         }
 
-        return ResponseEntity.ok("Message accepted");
+        return ResponseEntity.ok("/cat/request/"+requestID);
     }
 
     @PostMapping

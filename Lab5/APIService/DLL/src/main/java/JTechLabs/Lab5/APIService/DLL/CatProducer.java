@@ -43,8 +43,8 @@ public class CatProducer {
         kafkaTemplate.send("cat.get", catAsMessage);
     }
 
-    public void getCatByColor(String name, catColor color) throws JsonProcessingException {
-        HostnameWithCatColorMessage message = new HostnameWithCatColorMessage(name, color);
+    public void getCatByColor(String name, catColor color, Integer requestID) throws JsonProcessingException {
+        HostnameWithCatColorGetMessage message = new HostnameWithCatColorGetMessage(name, color, requestID);
         String catAsMessage = objectMapper.writeValueAsString(message);
         kafkaTemplate.send("cat.getByColor", catAsMessage);
     }

@@ -9,7 +9,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -103,11 +102,22 @@ public class CatService {
         catRepository.save(cat);
     }
 
-    public List<CatDTO> getCatsByColor(String hostname, catColor color){
+    @Transactional
+    public List<CatDTO> getCatsByColor(String hostname, catColor color, Integer requestID){
 
-        return catRepository.findByHost_NameAndColor(hostname, color)
+        List<CatDTO> cats = catRepository.findByHost_NameAndColor(hostname, color)
                 .stream()
                 .map(Cat::toDTO)
                 .collect(Collectors.toList());
+
+        try {
+            String result = mapper.writeValueAsString(cats);
+            CatGetRequest request = new CatGetRequest(null, requestID, hostname, result);
+            requestRepository.save(request);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return cats;
     }
 }

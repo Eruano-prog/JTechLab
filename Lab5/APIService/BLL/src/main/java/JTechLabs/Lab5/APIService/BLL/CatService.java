@@ -2,7 +2,6 @@ package JTechLabs.Lab5.APIService.BLL;
 
 import JTechLabs.Lab5.APIService.DLL.CatProducer;
 import JTechLabs.Lab5.APIService.DLL.ICatRequestRepository;
-import JTechLabs.Lab5.APIService.DLL.IRequestRepository;
 import JTechLabs.Lab5.APIService.Models.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,9 +44,9 @@ public class CatService{
         catProducer.saveCat(hostname, cat);
     }
 
-    public void getCatsByColor(String hostname, catColor color) throws JsonProcessingException {
+    public void getCatsByColor(String hostname, catColor color, Integer requestID) throws JsonProcessingException {
 
-        catProducer.getCatByColor(hostname, color);
+        catProducer.getCatByColor(hostname, color, requestID);
     }
 
     public List<CatDTO> checkRequest(Integer requestId) throws JsonProcessingException {
