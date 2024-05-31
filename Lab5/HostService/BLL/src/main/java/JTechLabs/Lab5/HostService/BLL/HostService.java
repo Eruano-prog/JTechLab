@@ -58,9 +58,12 @@ public class HostService {
     }
 
     public HostDTO modifyHost(HostDTO host){
-        Host convertedHost = host.toHost();
+        Host dbHost = hostRepository.findByName(host.getName())
+                .orElseThrow(() -> new EntityNotFoundException("Host with name " + host.getName() + " not found"));
 
-        Host savedHost = hostRepository.save(convertedHost);
+        dbHost.setFromDTO(host);
+
+        Host savedHost = hostRepository.save(dbHost);
 
         return savedHost.toDTO();
     }

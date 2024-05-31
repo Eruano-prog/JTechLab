@@ -29,7 +29,6 @@ public class CatController {
     public ResponseEntity<String> getCat(Authentication authentication, @RequestParam String name) {
         String username = authentication.getName();
 
-        CatDTO cat = null;
         try {
             catService.getCat(username, name);
         } catch (JsonProcessingException e) {
@@ -44,7 +43,7 @@ public class CatController {
         try {
             catService.getCatsByColor(username, color);
         } catch (JsonProcessingException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Parssing error");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Parsing error");
         }
 
         return ResponseEntity.ok("Message accepted");

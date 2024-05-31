@@ -27,8 +27,15 @@ public class CatService {
     }
 
     public CatDTO addCat(String hostname, CatDTO cat) {
-        Host host = hostRepository.findByName(hostname)
-                .orElseThrow(() -> new EntityNotFoundException("Host " + hostname + " does not exist"));
+        Host host = null;
+        try {
+            host = hostRepository.findByName(hostname)
+                    .orElseThrow(() -> new EntityNotFoundException("Host " + hostname + " does not exist"));
+        }
+        catch (EntityNotFoundException e) {
+            System.out.println("Host " + hostname + " does not exist");
+            return null;
+        }
         Cat catToAdd = cat.toCat();
         catToAdd.setHost(host);
 

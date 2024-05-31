@@ -51,6 +51,7 @@ public class HostService implements UserDetailsService {
 
     public void modifyHost(HostDTO host) throws JsonProcessingException {
         Host convertedHost = host.toHost();
+        convertedHost.setPassword(encoder.encode(convertedHost.getPassword()));
         hostProducer.putHost(convertedHost);
     }
 

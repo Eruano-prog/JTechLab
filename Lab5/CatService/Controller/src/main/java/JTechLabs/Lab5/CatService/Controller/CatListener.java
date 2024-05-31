@@ -31,7 +31,7 @@ public class CatListener {
             return;
         }
 
-        catService.addCat(cat.getHostName(), cat.getCat());
+        catService.modifyCat(cat.getHostName(), cat.getCat());
     }
 
     @KafkaListener(topics = "cat.delete")
@@ -57,7 +57,7 @@ public class CatListener {
             return;
         }
 
-        catService.modifyCat(cat.getHostName(), cat.getCat());
+        catService.addCat(cat.getHostName(), cat.getCat());
     }
 
     @KafkaListener(topics = "cat.get")

@@ -29,4 +29,10 @@ public class Host {
     public HostDTO toDTO(){
         return new HostDTO(id, name, birthDate, cats, password, roles);
     }
+    public void setFromDTO(HostDTO dto){
+        this.name = dto.getName();
+        this.birthDate = dto.getBirthDate();
+        this.password = dto.getPassword();
+        this.roles = dto.getRoles();
+    }
 }
