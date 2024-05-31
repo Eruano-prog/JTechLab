@@ -61,7 +61,10 @@ public class CatService {
         Host host = hostRepository.findByName(hostname)
                 .orElseThrow(() -> new EntityNotFoundException("Host " + hostname + " does not exist"));
 
-        Cat catToModify = cat.toCat();
+        Cat catToModify = catRepository.findByHost_NameAndNameIgnoreCase(hostname, cat.getName())
+                .orElseThrow(() -> new EntityNotFoundException("Cat with name " + cat.getName() + " not found"));
+
+        catToModify.setFromDTO(cat);
         catToModify.setHost(host);
 
         Cat savedCat = catRepository.save(catToModify);

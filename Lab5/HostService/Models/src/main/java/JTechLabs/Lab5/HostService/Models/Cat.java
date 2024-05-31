@@ -19,16 +19,17 @@ import java.util.List;
 @NoArgsConstructor
 public class Cat {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer id;
     public String name;
     public Date birthDate;
     public String type;
     public catColor color;
-    @ManyToOne
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HostName")
     public Host host;
+
     @ManyToMany(fetch = FetchType.LAZY)
     public List<Cat> friends = new ArrayList<>();
 

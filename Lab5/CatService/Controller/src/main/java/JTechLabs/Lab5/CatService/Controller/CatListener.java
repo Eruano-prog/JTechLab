@@ -36,15 +36,14 @@ public class CatListener {
 
     @KafkaListener(topics = "cat.delete")
     public void deleteCatPoint(String message){
-        CatWithHostnameMessage cat;
+        CatnameWithHostnameMessage cat;
         try {
-            cat = mapper.readValue(message, CatWithHostnameMessage.class);
-        } catch (JsonProcessingException e) {
-            System.out.println(e.getMessage());
-            return;
+            cat = mapper.readValue(message, CatnameWithHostnameMessage.class);
+            catService.deleteCat(cat.getHostname(), cat.getCatname());
         }
-
-        catService.deleteCat(cat.getHostName(), cat.getCat().name);
+        catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @KafkaListener(topics = "cat.put")
