@@ -48,6 +48,8 @@ public class Cat {
         this.birthDate = dto.getBirthDate();
         this.type = dto.getType();
         this.color = dto.getColor();
-        this.host = dto.getHost().toHost();
+        if (dto.getHost() != null) {
+            this.host = dto.getHost().toHost();
+        }
     }
 }

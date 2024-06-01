@@ -75,6 +75,7 @@ public class CatService {
         return cat.toDTO();
     }
 
+    @Transactional
     public CatDTO modifyCat(String hostname, CatDTO cat){
         Host host = hostRepository.findByName(hostname)
                 .orElseThrow(() -> new EntityNotFoundException("Host " + hostname + " does not exist"));

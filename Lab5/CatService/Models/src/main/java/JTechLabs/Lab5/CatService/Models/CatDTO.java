@@ -25,6 +25,10 @@ public class CatDTO {
     public List<Cat> friends;
 
     public Cat toCat(){
-        return new Cat(id, name, birthDate, type, color, host.toHost(), friends);
+        Host HostToSet = null;
+        if (host != null){
+            HostToSet = host.toHost();
+        }
+        return new Cat(id, name, birthDate, type, color, HostToSet, friends);
     }
 }
